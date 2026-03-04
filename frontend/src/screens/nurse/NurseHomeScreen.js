@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { AuthContext } from "../../context/AuthContext";
 
-const ParentsHomeScreen = () => {
+const NurseHomeScreen = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Panel Padres</Text>
+      <Text style={styles.title}>Panel Enfermero</Text>
       <Text style={styles.sub}>Bienvenido, {user?.nombre}</Text>
       <TouchableOpacity style={styles.boton} onPress={logout}>
         <Text style={styles.botonTexto}>Cerrar sesión</Text>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   botonTexto: { color: "#fff", fontWeight: "bold" },
 });
 
-export default ParentsHomeScreen;
+export default NurseHomeScreen;
