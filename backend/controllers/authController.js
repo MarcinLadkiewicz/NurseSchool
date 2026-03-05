@@ -1,16 +1,27 @@
 const pool = require('../config/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 //--------------
 //REGISTRAR NUEVO USUARIO
 //--------------
 
 exports.register = async (req, res) => {
+    const CODES = {
+        enfermero: process.env.ENF_CODE,
+        direccion: process.env.DIR_CODE
+    }
+
     try{
-        const {nombre, email, password, rol} = req.body;
+        const {nombre, email, password, rol, key} = req.body;
         if(!nombre || !email || !password || !rol){
             return res.status(400).json({error: 'Faltan campos obligatorios'});
+        }
+        if(rol !== 'padre'){
+            if(!key || key !== CODES[rol]){
+                return res.status(403).json({error: 'Código de invitación incorrecto'})
+            }
         }
 
         const exist = await pool.query(
@@ -57,10 +68,10 @@ exports.login = async (req, res) =>{
         }
 
         const usuario = result.rows[0];
-
+        
         const coincide = await bcrypt.compare(password, usuario.password_hash);
         if(!coincide){
-            return res.status(401).json({Error: 'Credenciales incorrectas'});
+            return res.status(401).json({error: 'Credenciales incorrectas'});
         }
 
         const token = jwt.sign(
@@ -76,6 +87,7 @@ exports.login = async (req, res) =>{
                 nombre: usuario.nombre,
                 email: usuario.email,
                 rol: usuario.rol
+
             }
         });
     } catch (err){
