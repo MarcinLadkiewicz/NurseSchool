@@ -1,3 +1,8 @@
+-- SCHEMA OF THE DATABASE TO EXEC WHEN DOCKER COMPOSE UP
+--docker exec -i nurseschool-db-1 psql -U user -d nurseschool <config/schema.sql
+
+
+
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL, 
@@ -18,11 +23,11 @@ CREATE TABLE IF NOT EXISTS students (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS atenttions (
+CREATE TABLE IF NOT EXISTS attentions (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES students(id),
     enfermero_id INT NOT NULL REFERENCES users(id),
-    atenttion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    attention_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reason VARCHAR(255) NOT NULL,
     actuation TEXT NOT NULL,
     actuation_description TEXT,
@@ -32,7 +37,7 @@ CREATE TABLE IF NOT EXISTS atenttions (
 
 CREATE TABLE IF NOT EXISTS allergies (
     id SERIAL PRIMARY KEY, 
-    alumno_id INT NOT NULL REFERENCES students(id),
+    student_id INT NOT NULL REFERENCES students(id),
     alergy_type VARCHAR(20) NOT NULL CHECK (alergy_type IN('alimentaria', 'medicamentosa')),
     alergy_description VARCHAR(255) NOT NULL,
     severity VARCHAR(20) NOT NULL CHECK (severity IN('alta', 'media', 'baja')),
@@ -41,7 +46,7 @@ CREATE TABLE IF NOT EXISTS allergies (
 
 CREATE TABLE IF NOT EXISTS pathologys (
     id SERIAL PRIMARY KEY,
-    alumno_id INT NOT NULL REFERENCES students(id),
+    student_id INT NOT NULL REFERENCES students(id),
     pathology_name VARCHAR(100) NOT NULL,
     pathology_description TEXT,
     added_file VARCHAR(255),
