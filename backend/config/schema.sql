@@ -1,6 +1,6 @@
-CREATE TABLE IF NOT EXISTS usuarios (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL, 
+    name VARCHAR(100) NOT NULL, 
     email VARCHAR(150) NOT NULL UNIQUE, 
     password_hash VARCHAR(255) NOT NULL, 
     rol VARCHAR(20) NOT NULL CHECK (rol IN('enfermero', 'padre', 'direccion')),
@@ -8,42 +8,42 @@ CREATE TABLE IF NOT EXISTS usuarios (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS alumnos (
+CREATE TABLE IF NOT EXISTS students (
     id SERIAL PRIMARY KEY, 
-    nombre VARCHAR(50) NOT NULL, 
-    apellidos VARCHAR (100) NOT NULL, 
-    curso VARCHAR(20) NOT NULL,
-    fecha_nacimiento DATE,
-    padre_id INT NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+    name VARCHAR(50) NOT NULL, 
+    surname VARCHAR (100) NOT NULL, 
+    course VARCHAR(20) NOT NULL,
+    birthdate DATE,
+    padre_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS atenciones (
+CREATE TABLE IF NOT EXISTS atenttions (
     id SERIAL PRIMARY KEY,
-    alumno_id INT NOT NULL REFERENCES alumnos(id),
-    enfermero_id INT NOT NULL REFERENCES usuarios(id),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    motivo VARCHAR(255) NOT NULL,
-    actuacion TEXT NOT NULL,
-    observaciones TEXT,
-    archivo_adjunto VARCHAR(250),
+    student_id INT NOT NULL REFERENCES students(id),
+    enfermero_id INT NOT NULL REFERENCES users(id),
+    atenttion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reason VARCHAR(255) NOT NULL,
+    actuation TEXT NOT NULL,
+    actuation_description TEXT,
+    added_file VARCHAR(250),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS alergias (
+CREATE TABLE IF NOT EXISTS allergies (
     id SERIAL PRIMARY KEY, 
-    alumno_id INT NOT NULL REFERENCES alumnos(id),
-    tipo VARCHAR(20) NOT NULL CHECK (tipo IN('alimentaria', 'medicamentosa')),
-    descripcion VARCHAR(255) NOT NULL,
-    severidad VARCHAR(20) NOT NULL CHECK (severidad IN('alta', 'media', 'baja')),
+    alumno_id INT NOT NULL REFERENCES students(id),
+    alergy_type VARCHAR(20) NOT NULL CHECK (alergy_type IN('alimentaria', 'medicamentosa')),
+    alergy_description VARCHAR(255) NOT NULL,
+    severity VARCHAR(20) NOT NULL CHECK (severity IN('alta', 'media', 'baja')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS patologias (
+CREATE TABLE IF NOT EXISTS pathologys (
     id SERIAL PRIMARY KEY,
-    alumno_id INT NOT NULL REFERENCES alumnos(id),
-    nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    informe_adjunto VARCHAR(255),
+    alumno_id INT NOT NULL REFERENCES students(id),
+    pathology_name VARCHAR(100) NOT NULL,
+    pathology_description TEXT,
+    added_file VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
