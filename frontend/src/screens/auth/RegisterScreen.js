@@ -34,7 +34,7 @@ const RegisterScreen = ({ navigation }) => {
     setLoading(true);
 
     try {
-      await api.post("/auth/register", { nombre: name, email, password, rol, key: code });
+      await api.post("/auth/register", { name, email, password, rol, key: code });
       Alert.alert("Cuenta creada", "Ya puedes iniciar sesión");
       navigation.goBack();
     } catch (err) {
