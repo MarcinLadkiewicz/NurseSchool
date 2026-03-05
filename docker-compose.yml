@@ -7,10 +7,13 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: nurseschool
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   admin:
     image: adminer
     ports:
       - 8080:8080
 
-  
+volumes:
+  pgdata:
