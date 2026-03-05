@@ -8,8 +8,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/uploads", express.static("uploads"));
+app.use("/api/auth", require('./routes/authRoutes'));
+app.use('/api/students', require('./routes/studentsRoutes'));
+
 
 //Ruta de prueba
 app.get("/api/health", (req, res) => {
