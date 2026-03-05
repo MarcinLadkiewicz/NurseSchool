@@ -14,8 +14,8 @@ exports.register = async (req, res) => {
     }
 
     try{
-        const {nombre, email, password, rol, key} = req.body;
-        if(!nombre || !email || !password || !rol){
+        const {name, email, password, rol, key} = req.body;
+        if(!name || !email || !password || !rol){
             return res.status(400).json({error: 'Faltan campos obligatorios'});
         }
         if(rol !== 'padre'){
@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
         }
 
         const exist = await pool.query(
-            'SELECT id FROM usuarios WHERE email = $1', [email]
+            'SELECT id FROM users WHERE email = $1', [email]
         );
 
         if(exist.rows.length > 0){
@@ -33,8 +33,8 @@ exports.register = async (req, res) => {
         } 
         const hash = await bcrypt.hash(password, 10);
         const result = await pool.query(
-            'INSERT INTO usuarios (nombre, email, password_hash, rol) VALUES ($1, $2, $3, $4) RETURNING id, nombre, email, rol',
-            [nombre, email, hash, rol]
+            'INSERT INTO users (name, email, password_hash, rol) VALUES ($1, $2, $3, $4) RETURNING id, name, email, rol',
+            [name, email, hash, rol]
         ); 
         res.status(201).json({
             mensaje: 'Usuario creado', 
@@ -59,7 +59,7 @@ exports.login = async (req, res) =>{
         }
 
         const result = await pool.query(
-            'SELECT * FROM usuarios WHERE email = $1',
+            'SELECT * FROM users WHERE email = $1',
             [email]
         );
 
@@ -67,15 +67,15 @@ exports.login = async (req, res) =>{
             return res.status(400).json({error: 'Credenciales incorrectas'});
         }
 
-        const usuario = result.rows[0];
+        const user = result.rows[0];
         
-        const coincide = await bcrypt.compare(password, usuario.password_hash);
-        if(!coincide){
+        const match = await bcrypt.compare(password, usuario.password_hash);
+        if(!match){
             return res.status(401).json({error: 'Credenciales incorrectas'});
         }
 
         const token = jwt.sign(
-            { id: usuario.id, rol: usuario.rol},
+            { id: user.id, rol: user.rol},
             process.env.JWT_SECRET,
             {expiresIn: '7d'}
         );
@@ -83,10 +83,10 @@ exports.login = async (req, res) =>{
         res.json({
             token,
             user: {
-                id: usuario.id,
-                nombre: usuario.nombre,
-                email: usuario.email,
-                rol: usuario.rol
+                id: user.id,
+                nombre: user.nombre,
+                email: user.email,
+                rol: user.rol
 
             }
         });
