@@ -69,7 +69,7 @@ exports.login = async (req, res) =>{
 
         const user = result.rows[0];
         
-        const match = await bcrypt.compare(password, usuario.password_hash);
+        const match = await bcrypt.compare(password, user.password_hash);
         if(!match){
             return res.status(401).json({error: 'Credenciales incorrectas'});
         }
@@ -84,7 +84,7 @@ exports.login = async (req, res) =>{
             token,
             user: {
                 id: user.id,
-                nombre: user.nombre,
+                nombre: user.name,
                 email: user.email,
                 rol: user.rol
 
