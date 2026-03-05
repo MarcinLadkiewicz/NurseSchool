@@ -20,7 +20,7 @@ exports.getAll = async (req, res) => {
             );
         } else {
             result = await pool.query(
-                'SELECT * FROM students ORDER BY name'
+                'SELECT * FROM students ORDER BY id'
             );
         }
 
@@ -51,7 +51,7 @@ exports.getById = async (req, res) => {
             'SELECT * FROM allergies WHERE student_id= $1', [id]
         );
         const pathologie = await pool.query(
-            'SELECT * FROM pathologies WHERE student_id= $1', [id]
+            'SELECT * FROM pathologys WHERE student_id= $1', [id]
         );
         const attention = await pool.query(
             'SELECT * FROM attentions WHERE student_id = $1 ORDER BY attention_date DESC', [id]
@@ -61,7 +61,7 @@ exports.getById = async (req, res) => {
         res.json({
           student: student.rows[0],
           allergies: allergie.rows,
-          pathologies: pathologie.rows,
+          pathologys: pathologie.rows,
           attentions: attention.rows
         });
 
@@ -114,9 +114,18 @@ exports.update = async (req, res) => {
         const { id } = req.params;
         const {name, surname, course, birthdate} = req.body;
 
+        const current = await pool.query(
+            'SELECT * FROM students WHERE id=$1', [id]
+        );
+        if(current.rows.length === 0){
+            return res.status(404).json({error: 'Alumno no encontrado'});
+        }
+
+        const student = current.rows[0];
+
         const result = await pool.query(
             'UPDATE students SET name=$1, surname=$2, course=$3, birthdate=$4 WHERE id=$5 RETURNING *', 
-            [name, surname, course, birthdate, id]
+            [name || student.name, surname||student.surname, course||student.course, birthdate||student.birthdate, id]
         );
         if(result.rows.length === 0){
             return res.status(404).json({error: 'Alumno no encontrado'});
