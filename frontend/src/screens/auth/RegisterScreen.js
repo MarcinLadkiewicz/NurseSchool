@@ -14,12 +14,13 @@ import { darkTheme as colors } from "../../theme/colors";
 import api from "../../api/axios";
 
 const RegisterScreen = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const [rol, setRol] = useState("enfermero");
+  const [rol, setRol] = useState('enfermero');
+  const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false);
 
 
@@ -27,10 +28,13 @@ const RegisterScreen = ({ navigation }) => {
     if (!name || !email || !password) {
       return Alert.alert("Error", "Rellena todos los campos.");
     }
+    if(rol !== 'padre' && !code){
+      return Alert.alert('Error', 'Introduce el código de invitación');
+    }
     setLoading(true);
 
     try {
-      await api.post("/auth/register", { nombre: name, email, password, rol });
+      await api.post("/auth/register", { nombre: name, email, password, rol, key: code });
       Alert.alert("Cuenta creada", "Ya puedes iniciar sesión");
       navigation.goBack();
     } catch (err) {
@@ -118,6 +122,28 @@ const RegisterScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
+      {/* Secure Code Register*/}
+      {rol !== 'padre' && (
+        <>
+          <Text style={styles.label}>Código de Invitación</Text>
+          <View style={styles.inputContainer}>
+            <Ionicons 
+              name='key-outline'
+              size={20}
+              color={colors.textMuted}
+              style={styles.inputIcon}
+              />
+          <TextInput 
+            style={styles.input}
+            placeholder='Código de invitación'
+            placeholderTextColor={colors.textMuted}
+            value={code}
+            onChangeText={setCode}
+            autoCapitalize='none'
+            />
+          </View>
+        </>
+      )}
 
       {/*Rol Selector*/}
 
