@@ -12,7 +12,7 @@ exports.getAllAllergys = async (req, res) => {
     const params = [];
 
     if(allergy_type && severity) {
-        query += ' WHERE allergie_type = $1 AND severity =$2';
+        query += ' WHERE allergy_type = $1 AND severity =$2';
         params.push(allergy_type, severity);
     } else if(allergy_type){
         query += ' WHERE allergy_type =$1';
@@ -111,7 +111,7 @@ exports.updateAllergy = async (req, res) => {
     const { alergy_type, alergy_description, severity} = req.body;
 
     const current = await pool.query(
-        'SELECT * FROM allergies WHERE id = $1',
+        'SELECT * FROM allergys WHERE id = $1',
         [id]
     );
 
@@ -121,8 +121,8 @@ exports.updateAllergy = async (req, res) => {
 
     const allergy = current.rows[0];
     const result = await pool.query(
-        'UPDATE allergies SET alergy_type=$1, alergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
-        [alergy_type || allergie.alergy_type, alergy_description || allergie.alergy_description || severity, allergie.severity, id ]
+        'UPDATE allergys SET alergy_type=$1, alergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
+        [alergy_type || allergy.alergy_type, alergy_description || allergy.alergy_description, severity || allergy.severity, id ]
     );
     
     return res.json({
@@ -142,6 +142,18 @@ exports.updateAllergy = async (req, res) => {
 
 exports.deleteAllergy = async (req, res) => {
   try {
+    const {id} = req.params;
+
+    const result = await pool.query(
+        'DELETE FROM allergys WHERE id = $1',
+        [id]
+    );
+
+    if(result.rowCount === 0){
+        return res.status(404).json({error: 'Alergia no encontrada'});
+    }
+
+    res.json({message: 'Alergia eliminada.'})
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Error del servidor" });
