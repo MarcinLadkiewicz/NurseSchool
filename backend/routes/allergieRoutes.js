@@ -9,4 +9,6 @@ router.post('/', auth, role(['enfermero']), ctrl.registerAllergy);
 router.put('/:id', auth, role(['enfermero']), ctrl.updateAllergy);
 router.delete('/:id', auth, role(['enfermero']), ctrl.deleteAllergy);
 
+//--- FALTA CREAR ENDPOINTS CON UPLOAD DE ARCHIVO --MULTER lo haré al final.
+
 module.exports = router;
