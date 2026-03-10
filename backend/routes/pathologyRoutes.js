@@ -7,3 +7,5 @@ router.post('/', auth, role(['enfermero']), ctrl.registerPathology);
 router.get('/students/:student_id', auth, role(['enfermero', 'padre']), ctrl.getByStudentId);
 //----
 //Subir informe queda pendiente con Multer más tarde.
+
+module.exports = router;
