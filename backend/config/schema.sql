@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS attentions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS allergys (
+CREATE TABLE IF NOT EXISTS allergies (
     id SERIAL PRIMARY KEY, 
     student_id INT NOT NULL REFERENCES students(id),
     alergy_type VARCHAR(20) NOT NULL CHECK (alergy_type IN('alimentaria', 'medicamentosa')),
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS allergys (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS pathologys (
+CREATE TABLE IF NOT EXISTS pathologies (
     id SERIAL PRIMARY KEY,
     student_id INT NOT NULL REFERENCES students(id),
     pathology_name VARCHAR(100) NOT NULL,

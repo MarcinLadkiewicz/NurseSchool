@@ -36,60 +36,60 @@ INSERT INTO students (name, surname, course, birthdate, padre_id) VALUES
 -- ==========================================
 
 -- Lucas (1) - alergia alimentaria grave
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (1, 'alimentaria', 'Alergia a los frutos secos (cacahuetes, nueces)', 'alta');
 
 -- Sofia (2) - dos alergias
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (2, 'medicamentosa', 'Alergia a la penicilina', 'alta'),
 (2, 'alimentaria', 'Intolerancia a la lactosa', 'media');
 
 -- Pablo (3) - sin alergias
 
 -- Martina (4) - alergia leve
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (4, 'alimentaria', 'Alergia al gluten (celiaca)', 'alta');
 
 -- Hugo (5) - sin alergias
 
 -- Valeria (6) - alergia medicamentosa
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (6, 'medicamentosa', 'Alergia al ibuprofeno', 'media');
 
 -- Daniel (7) - sin alergias
 
 -- Emma (8) - alergia alimentaria
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (8, 'alimentaria', 'Alergia al huevo', 'media');
 
 -- Alejandro (9) - sin alergias
 
 -- Carmen (10) - dos alergias
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (10, 'alimentaria', 'Alergia al marisco', 'alta'),
 (10, 'medicamentosa', 'Alergia a la amoxicilina', 'media');
 
 -- Adrian (11) - alergia leve
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (11, 'alimentaria', 'Alergia a la fresa', 'baja');
 
 -- Lucia (12) - sin alergias
 
 -- Diego (13) - alergia medicamentosa
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (13, 'medicamentosa', 'Alergia al paracetamol', 'alta');
 
 -- Noa (14) - sin alergias
 
 -- Iker (15) - alergia alimentaria
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (15, 'alimentaria', 'Alergia a la proteina de la leche', 'media');
 
 -- Abril (16) - sin alergias
 -- Leo (17) - sin alergias
 
 -- Chloe (18) - alergia leve
-INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES
+INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES
 (18, 'alimentaria', 'Alergia al kiwi', 'baja');
 
 -- Marco (19) - sin alergias
@@ -99,7 +99,7 @@ INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VAL
 -- PATOLOGIAS (8 students con patologias)
 -- ==========================================
 
-INSERT INTO pathologys (student_id, pathology_name, pathology_description) VALUES
+INSERT INTO pathologies (student_id, pathology_name, pathology_description) VALUES
 (1, 'Asma', 'Asma leve diagnosticada en 2020. Usa inhalador de rescate Ventolin.'),
 (2, 'Dermatitis atopica', 'Brotes frecuentes en brazos y piernas. Tratamiento con crema hidratante y corticoides topicos.'),
 (4, 'Enfermedad celiaca', 'Diagnosticada en 2018. Dieta estricta sin gluten.'),
