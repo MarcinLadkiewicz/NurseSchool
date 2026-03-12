@@ -47,11 +47,11 @@ exports.getById = async (req, res) => {
             return res.status(404).json({error: 'Alumno no encontrado'});
         }
 
-        const allergie = await pool.query(
+        const allergy = await pool.query(
             'SELECT * FROM allergies WHERE student_id= $1', [id]
         );
-        const pathologie = await pool.query(
-            'SELECT * FROM pathologys WHERE student_id= $1', [id]
+        const pathology = await pool.query(
+            'SELECT * FROM pathologies WHERE student_id= $1', [id]
         );
         const attention = await pool.query(
             'SELECT * FROM attentions WHERE student_id = $1 ORDER BY attention_date DESC', [id]
@@ -60,8 +60,8 @@ exports.getById = async (req, res) => {
 
         res.json({
           student: student.rows[0],
-          allergies: allergie.rows,
-          pathologys: pathologie.rows,
+          allergies: allergy.rows,
+          pathologies: pathology.rows,
           attentions: attention.rows
         });
 

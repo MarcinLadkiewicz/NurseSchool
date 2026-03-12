@@ -23,7 +23,7 @@ exports.registerPathology = async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO pathologys (student_id, pathology_name, pathology_description) VALUES ($1, $2, $3) RETURNING *',
+            'INSERT INTO pathologies (student_id, pathology_name, pathology_description) VALUES ($1, $2, $3) RETURNING *',
             [student_id, pathology_name, pathology_description || null]
         );
 
@@ -59,7 +59,7 @@ exports.getByStudentId = async (req, res) => {
     }
 
     const result = await pool.query(
-        'SELECT * FROM pathologys WHERE student_id = $1',
+        'SELECT * FROM pathologies WHERE student_id = $1',
         [student_id]
     );
 

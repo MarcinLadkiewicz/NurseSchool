@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS students (
     course VARCHAR(20) NOT NULL,
     birthdate DATE,
     padre_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS attentions (

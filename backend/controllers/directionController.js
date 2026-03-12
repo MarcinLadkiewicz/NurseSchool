@@ -40,19 +40,19 @@ exports.getAllAttentions = async (req, res) => {
 //ALL ALLERGYS
 //-----------------------
 
-exports.getAllAllergys = async (req, res) => {
+exports.getAllAllergies = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 20;
     const offset = (page - 1) * limit;
 
-    const count = await pool.query('SELECT COUNT(*) FROM allergys');
+    const count = await pool.query('SELECT COUNT(*) FROM allergies');
     const total = parseInt(count.rows[0].count);
 
     const result = await pool.query(
         `
         SELECT a.*, s.name AS student_name, s.surname AS student_surname 
-        FROM allergys a
+        FROM allergies a
         JOIN students s ON
         a.student_id = s.id
         ORDER BY alergy_type
@@ -83,12 +83,12 @@ exports.summary = async (req, res) => {
   try {
     const attention = await pool.query('SELECT COUNT(*) FROM attentions');
     const students = await pool.query('SELECT COUNT(DISTINCT student_id) FROM attentions');
-    const allergys = await pool.query('SELECT COUNT(*) FROM allergys');
+    const allergies = await pool.query('SELECT COUNT(*) FROM allergies');
 
     res.json({
         total_attentions: parseInt(attention.rows[0].count),
         students_attended: parseInt(students.rows[0].count),
-        total_allergys: parseInt(allergys.rows[0].count)
+        total_allergies: parseInt(allergies.rows[0].count)
     });
     
   } catch (err) {

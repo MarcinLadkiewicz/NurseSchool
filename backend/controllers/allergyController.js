@@ -51,7 +51,7 @@ exports.getAllergyByStudentId = async (req, res) => {
      }
 
     const result = await pool.query(
-        'SELECT * FROM allergys WHERE student_id = $1', [student_id]
+        'SELECT * FROM allergies WHERE student_id = $1', [student_id]
     );
 
     if(result.rows.length === 0){
@@ -86,7 +86,7 @@ exports.registerAllergy = async (req, res) => {
     }
 
     const result = await pool.query(
-        'INSERT INTO allergys (student_id, alergy_type, alergy_description, severity) VALUES($1, $2, $3, $4)RETURNING * ',
+        'INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES($1, $2, $3, $4)RETURNING * ',
         [student_id, alergy_type, alergy_description, severity]
     );
 
@@ -111,7 +111,7 @@ exports.updateAllergy = async (req, res) => {
     const { alergy_type, alergy_description, severity} = req.body;
 
     const current = await pool.query(
-        'SELECT * FROM allergys WHERE id = $1',
+        'SELECT * FROM alleries WHERE id = $1',
         [id]
     );
 
@@ -121,7 +121,7 @@ exports.updateAllergy = async (req, res) => {
 
     const allergy = current.rows[0];
     const result = await pool.query(
-        'UPDATE allergys SET alergy_type=$1, alergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
+        'UPDATE allergies SET alergy_type=$1, alergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
         [alergy_type || allergy.alergy_type, alergy_description || allergy.alergy_description, severity || allergy.severity, id ]
     );
     
@@ -145,7 +145,7 @@ exports.deleteAllergy = async (req, res) => {
     const {id} = req.params;
 
     const result = await pool.query(
-        'DELETE FROM allergys WHERE id = $1',
+        'DELETE FROM allergies WHERE id = $1',
         [id]
     );
 
