@@ -7,6 +7,7 @@ import RegisterScreen from '../screens/auth/RegisterScreen';
 import NurseHomeScreen from '../screens/nurse/NurseHomeScreen';
 import ParentsHomeScreen from '../screens/parents/ParentsHomeScreen';
 import DirectionHomeScreen from '../screens/direction/DirectionHomeScreen';
+import NurseTabs from './Tabs/NurseTabs';
 
 
 
@@ -24,7 +25,7 @@ const AppNavigator = () => {
               <Stack.Screen name='Register' component={RegisterScreen}/>
             </>
           ) : user?.rol === 'enfermero' ? (
-            <Stack.Screen name='NurseHome' component={NurseHomeScreen}/>
+            <Stack.Screen name='NurseHome' component={NurseTabs}/>
           ) : user?.rol === 'padre' ? (
             <Stack.Screen name='ParentHome' component={ParentsHomeScreen}/>
           ) : user?.rol === 'direccion' ? (
