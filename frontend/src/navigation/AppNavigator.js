@@ -4,10 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { AuthContext } from '../context/AuthContext';
 import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
-import NurseHomeScreen from '../screens/nurse/NurseHomeScreen';
-import ParentsHomeScreen from '../screens/parents/ParentsHomeScreen';
-import DirectionHomeScreen from '../screens/direction/DirectionHomeScreen';
 import NurseTabs from './Tabs/NurseTabs';
+import ParentTabs from './Tabs/ParentTabs';
+import DirectionTab from './Tabs/DirectionTabs';
 
 
 
@@ -27,9 +26,9 @@ const AppNavigator = () => {
           ) : user?.rol === 'enfermero' ? (
             <Stack.Screen name='NurseHome' component={NurseTabs}/>
           ) : user?.rol === 'padre' ? (
-            <Stack.Screen name='ParentHome' component={ParentsHomeScreen}/>
+            <Stack.Screen name='ParentHome' component={ParentTabs}/>
           ) : user?.rol === 'direccion' ? (
-            <Stack.Screen name='DirectionHome' component={DirectionHomeScreen}/>
+            <Stack.Screen name='DirectionHome' component={DirectionTab}/>
           ) : null}
         </Stack.Navigator>
       </NavigationContainer>
