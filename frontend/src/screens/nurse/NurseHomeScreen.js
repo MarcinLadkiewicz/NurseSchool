@@ -71,7 +71,7 @@
              {/* Header: saludo + campana */}
              <View style={styles.header}>
                <View>
-                 <Text style={styles.greeting}>{getGreeting},</Text>
+                 <Text style={styles.greeting}>{getGreeting}</Text>
                  <Text style={styles.userName}>{user?.nombre} 👋</Text>
                </View>
                <TouchableOpacity style={styles.bellContainer}>
