@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 const ParentTabs = () => {
     return (
         <Tab.Navigator screenOption={{headerShown : false}}>
-            <Tab.Screen name='ParentHome' component={ParentsHomeScreen} options={{
+            <Tab.Screen name='Inicio' component={ParentsHomeScreen} options={{
                 tabBarIcon: (focused, size) => (
                     <Ionicons 
                         name = {focused ? 'home' : 'home-outline'}
@@ -23,7 +23,7 @@ const ParentTabs = () => {
                     />
                 )
             }}/>
-            <Tab.Screen name='ParentStudent' component={ParentStudentScreen} options={{
+            <Tab.Screen name='Hijos' component={ParentStudentScreen} options={{
                 tabBarIcon: (focused, size) => (
                     <Ionicons
                         name={focused ? 'people' : 'people-outline'}
@@ -32,7 +32,7 @@ const ParentTabs = () => {
                     />
                 )
             }}/>
-            <Tab.Screen name='ParentAttention' component={ParentAttentionScreen} options={{
+            <Tab.Screen name='Atenciones' component={ParentAttentionScreen} options={{
                 tabBarIcon: (focused, size) => (
                     <Ionicons
                         name={focused ? 'pulse' : 'pulse-outline'}
@@ -41,7 +41,7 @@ const ParentTabs = () => {
                     />
                 )
             }}/>
-            <Tab.Screen name='ParentAllergie' component={ParentAllergieScreen} options={{
+            <Tab.Screen name='Alergias' component={ParentAllergieScreen} options={{
                 tabBarIcon: (focused, size) => (
                     <Ionicons
                         name={focused ? 'warning' : 'warning-outline'}
@@ -50,7 +50,7 @@ const ParentTabs = () => {
                     />
                 )
             }}/>
-            <Tab.Screen name='SettingsScreen' component={SettingsScreen} options={{
+            <Tab.Screen name='Ajustes' component={SettingsScreen} options={{
                 tabBarIcon: (focused, size) => (
                     <Ionicons
                         name={focused ? 'settings' : 'settings-outline'}

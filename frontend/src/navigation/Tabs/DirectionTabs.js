@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 const DirectionTab = () => {
     return(
         <Tab.Navigator screenOption={{headerShown : false}}>    
-            <Tab.Screen name = 'DirectionHome' component={DirectionHomeScreen} options={{
+            <Tab.Screen name = 'Inicio' component={DirectionHomeScreen} options={{
                 tabBarIcon : (focused, size) => (
                     <Ionicons
                         name={focused ? 'home' : 'home-outline'}
@@ -21,7 +21,7 @@ const DirectionTab = () => {
                     />
                 )
             }}/>
-            <Tab.Screen name = 'Settings' component={SettingsScreen} options={{
+            <Tab.Screen name = 'Ajustes' component={SettingsScreen} options={{
                 tabBarIcon : (focused, size) => (
                     <Ionicons
                         name = {focused ? 'settings' : 'settings-outline'}
