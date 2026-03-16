@@ -115,7 +115,7 @@ exports.createAttention = async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO attentions (student_id, enfermero_id, reason, actuation, actuaction_description) VALUES ($1, $2, $3, $4, $5) RETURNING*',
+            'INSERT INTO attentions (student_id, enfermero_id, reason, actuation, actuation_description) VALUES ($1, $2, $3, $4, $5) RETURNING*',
             [student_id, enfermero_id, reason, actuation, actuation_description]
         );
         //Aquí irá la notificación push al padre.

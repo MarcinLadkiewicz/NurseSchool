@@ -15,13 +15,23 @@ exports.getAll = async (req, res) => {
 
         if(name) {
             result = await pool.query(
-                'SELECT * FROM students WHERE name ILIKE $1 ORDER BY name',
+                `SELECT s.*, COUNT(a.id) AS allergy_count
+                 FROM students s
+                 LEFT JOIN allergies a ON
+                 a.student_id = s.id
+                 WHERE name ILIKE $1 
+                 ORDER BY name`,
                 [`%${name}%`]
             );
         } else {
             result = await pool.query(
-                'SELECT * FROM students ORDER BY id'
-            );
+                `SELECT s.*, COUNT(a.id) AS allergy_count
+                 FROM students s 
+                 LEFT JOIN allergies a ON
+                 a.student_id = s.id
+                 GROUP BY s.id
+                 ORDER BY id`
+            )
         }
 
         res.json(result.rows); 
@@ -40,7 +50,11 @@ exports.getById = async (req, res) => {
         const { id } = req.params;
 
         const student = await pool.query(
-            'SELECT * FROM students WHERE id = $1', [id]
+            `SELECT s.*, u.name AS parent_name, u.email AS parent_email
+             FROM students s 
+             LEFT JOIN users u
+             ON s.padre_id = u.id
+             WHERE s.id = $1`, [id]
         );
 
         if(student.rows.length === 0) {
