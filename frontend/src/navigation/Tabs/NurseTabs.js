@@ -15,16 +15,31 @@ const Tab = createBottomTabNavigator();
 
 const NurseTabs = () => {
 return (
-  <Tab.Navigator screenOptions={{ headerShown: false }}>
+  <Tab.Navigator screenOptions={{ headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colors.surface,
+          borderTopColor: colors.border,
+          borderTopWidth: 1,
+          height: 85,
+          paddingBottom: 20,
+          paddingTop: 8,
+        },
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textMuted,
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
+      }}>
     <Tab.Screen
       name="Inicio"
       component={NurseHomeScreen}
       options={{
-        tabBarIcon: ({focused, size}) => (
+        tabBarIcon: ({focused, size, color}) => (
           <Ionicons
             name={focused ? 'home' : 'home-outline'}
             size={size || 20}
-            color={colors.primary}
+            color={color}
           />
         )
       }}
@@ -33,38 +48,38 @@ return (
       name="Alumnos"
       component={StudentsScreen}
       options={{
-        tabBarIcon: ({focused, size}) => (
+        tabBarIcon: ({focused, size, color}) => (
           <Ionicons
             name={focused ? 'people' : 'people-outline'}
             size={size || 20}
-            color={colors.primary}
+            color={color}
           />
         )
       }}
     />
     <Tab.Screen name="Atenciones" component={NewAttentionScreen} options={{
-        tabBarIcon : ({focused, size}) => (
+        tabBarIcon : ({focused, size, color}) => (
             <Ionicons
                 name={focused ? 'pulse' : 'pulse-outline'}
                 size={size || 20}
-                color={colors.primary}
+                color={color}
         />)
     }} />
     <Tab.Screen name="Alergias" component={AllergiesScreen} options={{
-        tabBarIcon : ({focused, size}) => (
+        tabBarIcon : ({focused, size, color}) => (
             <Ionicons
                 name={focused ? 'warning' : 'warning-outline'}
                 size={size || 20}
-                color={colors.primary}
+                color={color}
             />
         )
     }} />
     <Tab.Screen name="Ajustes" component={SettingsScreen} options={{
-        tabBarIcon : ({focused, size}) => (
+        tabBarIcon : ({focused, size, color}) => (
             <Ionicons
                 name={focused ? 'settings' : 'settings-outline'}
                 size={size || 20}
-                color={colors.primary}
+                color={color}
             />
         )
     }} />

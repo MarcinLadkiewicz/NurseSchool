@@ -4,7 +4,7 @@ const cors = require("cors");
 require("./config/db");
 const app = express();
 
-//Middlewares globales
+
 
 app.use(cors());
 app.use(express.json());
@@ -13,12 +13,7 @@ app.use('/api/students', require('./routes/studentsRoutes'));
 app.use('/api/allergys', require('./routes/allergyRoutes'));
 app.use('/api/pathologys', require('./routes/pathologyRoutes'));
 app.use('/api/attentions', require('./routes/attentionRoutes'));
-
-
-//Ruta de prueba
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "NurseSchool API running" });
-});
+app.use('/api/nurse', require('./routes/nurseRoutes'));
 
 
 const PORT = process.env.PORT || 3000;
