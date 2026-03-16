@@ -3,10 +3,10 @@ import react from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import NurseHomeScreen from '../../screens/nurse/NurseHomeScreen';
-import StudentsScreen from '../../screens/nurse/StudentsScreen'; 
 import NewAttentionScreen from '../../screens/nurse/NewAttentionScreen';
 import AllergiesScreen from '../../screens/nurse/AllergiesScreen';
 import SettingsScreen from '../../screens/shared/SettingsScreen';
+import NurseStudentStack from '../NurseStudentStack';
 import {darkTheme as colors} from '../../theme/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -46,7 +46,7 @@ return (
     />
     <Tab.Screen
       name="Alumnos"
-      component={StudentsScreen}
+      component={NurseStudentStack}
       options={{
         tabBarIcon: ({focused, size, color}) => (
           <Ionicons
