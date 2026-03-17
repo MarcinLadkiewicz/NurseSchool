@@ -32,7 +32,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     loadStudent();
-  }, []);
+  }, [route.params?.updated]);
 
   const getAge = (birthdate) => {
     if (!birthdate) return "";

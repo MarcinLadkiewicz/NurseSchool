@@ -46,7 +46,7 @@ const EditStudentScreen = ({route, navigation}) => {
             padre_id: padre_id || null,
         })
         Alert.alert('Alumno editado correctamente');
-        navigation.goBack();
+        navigation.navigate('Detail', {id: student.id, updated: true});
     } catch (err) {
         const message = err.response?.data?.error || 'Error de conexión';
         return Alert.alert(message);
