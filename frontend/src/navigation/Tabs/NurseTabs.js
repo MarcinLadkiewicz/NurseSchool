@@ -4,7 +4,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import NurseHomeScreen from '../../screens/nurse/NurseHomeScreen';
 import NewAttentionScreen from '../../screens/nurse/NewAttentionScreen';
-import AllergiesScreen from '../../screens/nurse/AllergiesScreen';
 import SettingsScreen from '../../screens/shared/SettingsScreen';
 import NurseStudentStack from '../NurseStudentStack';
 import NurseAllergiesStack from '../NurseAllergyStack';

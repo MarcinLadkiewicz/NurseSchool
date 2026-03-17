@@ -101,6 +101,15 @@ const StudentDetailScreen = ({ route, navigation }) => {
             <Ionicons name="chevron-back" size={22} color={colors.primary} />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Ficha del alumno</Text>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => {
+                console.log('student: ', student)
+                navigation.navigate("EditStudent", { student })
+            }}
+          >
+            <Ionicons name="create-outline" size={20} color={colors.primary} />
+          </TouchableOpacity>
         </View>
 
         {/* Tarjeta principal: avatar + nombre + curso + badges */}
@@ -328,6 +337,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: colors.textPrimary,
     marginLeft: 14,
+  },
+  editButton: {
+    marginLeft: "auto",
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: colors.surface,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.border,
   },
 
   card: {
