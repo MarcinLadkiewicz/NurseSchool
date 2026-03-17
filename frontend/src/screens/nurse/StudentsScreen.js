@@ -51,17 +51,12 @@ const StudentsScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Panel Alumnos</Text>
-      <TouchableOpacity style={styles.addStudent} onPress={()=> navigation.navigate('AddStudent')}>
-        <Ionicons name='add' size={20} color={colors.primary}/>
-      </TouchableOpacity>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder='Buscar alumno...' placeholderTextColor={colors.textMuted} onChangeText={setInputText} value={inputText}/>
-      </View>
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => <StudentItem item={item} navigation={navigation}/>}
+        renderItem={({ item }) => (
+          <StudentItem item={item} navigation={navigation} />
+        )}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -69,9 +64,46 @@ const StudentsScreen = ({navigation}) => {
             tintColor={colors.primary}
           />
         }
-        />
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons
+              name="people-outline"
+              size={48}
+              color={colors.textMuted}
+            />
+            <Text style={styles.emptyText}>No se encontraron alumnos</Text>
+          </View>
+        }
+        ListHeaderComponent={
+          <>
+            <View style={styles.headerRow}>
+              <Text style={styles.title}>Panel Alumnos</Text>
+              <TouchableOpacity
+                style={styles.addStudent}
+                onPress={() => navigation.navigate("AddStudent")}
+              >
+                <Ionicons name="add" size={20} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.inputContainer}>
+              <Ionicons
+                name="search-outline"
+                size={18}
+                color={colors.textMuted}
+                style={{ marginRight: 8 }}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Buscar alumno..."
+                placeholderTextColor={colors.textMuted}
+                onChangeText={setInputText}
+                value={inputText}
+              />
+            </View>
+          </>
+        }
+      />
     </View>
-    
   );
 };
 
@@ -82,6 +114,13 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 20,
   },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
   center: {
     justifyContent: "center",
     alignItems: "center",
@@ -90,12 +129,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "700",
     color: colors.textPrimary,
-    marginBottom: 16,
   },
   addStudent: {
-    position: "absolute",
-    top: 60,
-    right: 20,
     width: 44,
     height: 44,
     borderRadius: 14,
@@ -114,7 +149,6 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     paddingHorizontal: 14,
     marginBottom: 16,
-    marginTop: 30
   },
   input: {
     flex: 1,

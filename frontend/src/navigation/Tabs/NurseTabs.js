@@ -7,6 +7,7 @@ import NewAttentionScreen from '../../screens/nurse/NewAttentionScreen';
 import AllergiesScreen from '../../screens/nurse/AllergiesScreen';
 import SettingsScreen from '../../screens/shared/SettingsScreen';
 import NurseStudentStack from '../NurseStudentStack';
+import NurseAllergiesStack from '../NurseAllergyStack';
 import {darkTheme as colors} from '../../theme/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -65,7 +66,7 @@ return (
                 color={color}
         />)
     }} />
-    <Tab.Screen name="Alergias" component={AllergiesScreen} options={{
+    <Tab.Screen name="Alergias" component={NurseAllergiesStack} options={{
         tabBarIcon : ({focused, size, color}) => (
             <Ionicons
                 name={focused ? 'warning' : 'warning-outline'}

@@ -4,21 +4,26 @@ const pool = require("../config/db");
 // LIST ALL ALLERGYS
 //-------------------
 
-exports.getAllAllergys = async (req, res) => {
+exports.getAllAllergies = async (req, res) => {
   try {
 
     const {allergy_type, severity} = req.query;
-    let query = 'SELECT * FROM allergys';
+    let query = `SELECT a.*, s.name AS student_name, s.surname AS student_surname, s.course FROM
+    allergies a
+    JOIN students s ON
+    a.student_id = s.id
+    `
+    ;
     const params = [];
 
     if(allergy_type && severity) {
-        query += ' WHERE allergy_type = $1 AND severity =$2';
+        query += ' WHERE a.allergy_type = $1 AND a.severity =$2';
         params.push(allergy_type, severity);
     } else if(allergy_type){
-        query += ' WHERE allergy_type =$1';
+        query += ' WHERE a.allergy_type =$1';
         params.push(allergy_type);
     } else if(severity) {
-        query += ' WHERE severity = $1';
+        query += ' WHERE a.severity = $1';
         params.push(severity);
     }
 
@@ -71,9 +76,9 @@ exports.getAllergyByStudentId = async (req, res) => {
 
 exports.registerAllergy = async (req, res) => {
   try {
-    const {student_id, alergy_type, alergy_description, severity } = req.body;
+    const {student_id, alergy_type, allergy_description, severity } = req.body;
 
-    if(!student_id || !alergy_type || !alergy_description || !severity){
+    if(!student_id || !alergy_type || !allergy_description || !severity){
         return res.status(400).json({error: 'Faltan campos obligatorios'});
     }
 
@@ -86,8 +91,8 @@ exports.registerAllergy = async (req, res) => {
     }
 
     const result = await pool.query(
-        'INSERT INTO allergies (student_id, alergy_type, alergy_description, severity) VALUES($1, $2, $3, $4)RETURNING * ',
-        [student_id, alergy_type, alergy_description, severity]
+        'INSERT INTO allergies (student_id, allergy_type, allergy_description, severity) VALUES($1, $2, $3, $4)RETURNING * ',
+        [student_id, allergy_type, allergy_description, severity]
     );
 
     return res.status(201).json({
@@ -108,7 +113,7 @@ exports.registerAllergy = async (req, res) => {
 exports.updateAllergy = async (req, res) => {
   try {
     const { id } = req.params;
-    const { alergy_type, alergy_description, severity} = req.body;
+    const { allergy_type, allergy_description, severity} = req.body;
 
     const current = await pool.query(
         'SELECT * FROM alleries WHERE id = $1',
@@ -121,8 +126,8 @@ exports.updateAllergy = async (req, res) => {
 
     const allergy = current.rows[0];
     const result = await pool.query(
-        'UPDATE allergies SET alergy_type=$1, alergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
-        [alergy_type || allergy.alergy_type, alergy_description || allergy.alergy_description, severity || allergy.severity, id ]
+        'UPDATE allergies SET allergy_type=$1, allergy_description=$2, severity=$3 WHERE id=$4 RETURNING *',
+        [allergy_type || allergy.allergy_type, allergy_description || allergy.allergy_description, severity || allergy.severity, id ]
     );
     
     return res.json({

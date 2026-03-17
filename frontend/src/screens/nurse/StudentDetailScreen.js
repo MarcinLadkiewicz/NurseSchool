@@ -141,7 +141,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
                         { color: severityColor.text },
                       ]}
                     >
-                      {allergy.alergy_description.split("(")[0].trim()}
+                      {allergy.allergy_description.split("(")[0].trim()}
                     </Text>
                   </View>
                 );
@@ -174,11 +174,11 @@ const StudentDetailScreen = ({ route, navigation }) => {
               <View key={allergy.id}>
                 <View style={styles.infoRow}>
                   <Text style={styles.infoLabel}>
-                    {allergy.alergy_type.charAt(0).toUpperCase() +
-                      allergy.alergy_type.slice(1)}
+                    {allergy.allergy_type.charAt(0).toUpperCase() +
+                      allergy.allergy_type.slice(1)}
                   </Text>
                   <Text style={styles.infoValue}>
-                    {allergy.alergy_description}
+                    {allergy.allergy_description}
                   </Text>
                 </View>
                 {index < allergies.length - 1 && (
