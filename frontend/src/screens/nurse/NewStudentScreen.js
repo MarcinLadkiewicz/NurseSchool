@@ -27,7 +27,7 @@ const NewStudentScreen = ({navigation}) => {
         birthdate: birthdate || null,
       });
       Alert.alert('Alumno creado', 'El alumno se ha registrado correctamente.');
-      navigation.goBack();
+      navigation.navigate('StudentScreen', {created: Date.now()});
     } catch (err) {
       const message = err.response?.data?.error || 'Error de conexión';
       Alert.alert('Error', message);
