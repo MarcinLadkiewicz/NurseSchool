@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   avatarText: {
     fontSize: 16,
     fontWeight: "700",
+    color: '#fff'
   },
   info: {
     flex: 1,
