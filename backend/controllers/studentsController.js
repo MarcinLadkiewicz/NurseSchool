@@ -92,7 +92,7 @@ exports.getById = async (req, res) => {
 exports.create = async (req, res) => {
     try{
         const {name, surname, course, birthdate, padre_id} = req.body;
-        if(!name || !surname || !course || !birthdate || !padre_id){
+        if(!name || !surname || !course || !birthdate){
             return res.status(400).json({error: 'Faltan datos obligatorios'});
         }
 
@@ -106,7 +106,7 @@ exports.create = async (req, res) => {
 
         const result = await pool.query(
             'INSERT INTO students (name, surname, course, birthdate, padre_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [ name, surname, course, birthdate, padre_id] 
+            [ name, surname, course, birthdate, padre_id || null] 
         );
 
         res.status(201).json({
@@ -126,7 +126,7 @@ exports.create = async (req, res) => {
 exports.update = async (req, res) => {
     try{
         const { id } = req.params;
-        const {name, surname, course, birthdate} = req.body;
+        const {name, surname, course, birthdate, padre_id} = req.body;
 
         const current = await pool.query(
             'SELECT * FROM students WHERE id=$1', [id]
@@ -138,8 +138,8 @@ exports.update = async (req, res) => {
         const student = current.rows[0];
 
         const result = await pool.query(
-            'UPDATE students SET name=$1, surname=$2, course=$3, birthdate=$4 WHERE id=$5 RETURNING *', 
-            [name || student.name, surname||student.surname, course||student.course, birthdate||student.birthdate, id]
+            'UPDATE students SET name=$1, surname=$2, course=$3, birthdate=$4, padre_id=$5 WHERE id=$6 RETURNING *', 
+            [name || student.name, surname||student.surname, course||student.course, birthdate||student.birthdate,padre_id||student.padre_id, id]
         );
         if(result.rows.length === 0){
             return res.status(404).json({error: 'Alumno no encontrado'});
@@ -181,5 +181,19 @@ exports.getByFatherId = async (req,res) => {
     } catch(err){
         console.error(err);
         return res.status(500).json({error: 'Error del Servidor.'})
+    }
+}
+
+exports.getParents = async (req, res) => {
+
+    try{
+        const result = await pool.query(
+            `SELECT id, name, email FROM users WHERE rol='padre' ORDER BY name`
+        );
+
+        res.json(result.rows);
+    } catch(err){
+        console.error(err);
+        return res.status(500).json({error: 'Error del servidor.'})
     }
 }
