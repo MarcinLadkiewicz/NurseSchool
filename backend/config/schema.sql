@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS attentions (
 CREATE TABLE IF NOT EXISTS allergies (
     id SERIAL PRIMARY KEY, 
     student_id INT NOT NULL REFERENCES students(id),
-    alergy_type VARCHAR(20) NOT NULL CHECK (alergy_type IN('alimentaria', 'medicamentosa')),
-    alergy_description VARCHAR(255) NOT NULL,
+    allergy_type VARCHAR(20) NOT NULL CHECK (allergy_type IN('alimentaria', 'medicamentosa')),
+    allergy_description VARCHAR(255) NOT NULL,
     severity VARCHAR(20) NOT NULL CHECK (severity IN('alta', 'media', 'baja')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

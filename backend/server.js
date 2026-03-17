@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", require('./routes/authRoutes'));
 app.use('/api/students', require('./routes/studentsRoutes'));
-app.use('/api/allergys', require('./routes/allergyRoutes'));
+app.use('/api/allergies', require('./routes/allergyRoutes'));
 app.use('/api/pathologys', require('./routes/pathologyRoutes'));
 app.use('/api/attentions', require('./routes/attentionRoutes'));
 app.use('/api/nurse', require('./routes/nurseRoutes'));
