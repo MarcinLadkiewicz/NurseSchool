@@ -76,9 +76,9 @@ exports.getAllergyByStudentId = async (req, res) => {
 
 exports.registerAllergy = async (req, res) => {
   try {
-    const {student_id, alergy_type, allergy_description, severity } = req.body;
+    const {student_id, allergy_type, allergy_description, severity } = req.body;
 
-    if(!student_id || !alergy_type || !allergy_description || !severity){
+    if(!student_id || !allergy_type || !allergy_description || !severity){
         return res.status(400).json({error: 'Faltan campos obligatorios'});
     }
 
