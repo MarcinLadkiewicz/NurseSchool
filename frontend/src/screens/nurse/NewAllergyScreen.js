@@ -31,8 +31,8 @@ const NewAllergyScreen = ({route, navigation}) => {
     }
   }, [] );
 
-  const filteredStudents = students.filter((s) => 
-    `${s.name}${s.surname}`.toLowerCase().includes(studentSearch.toLowerCase())
+  const filteredStudents = students.filter((s) =>
+    (`${s.name}${s.surname}`.toLowerCase().includes(studentSearch.toLowerCase()))
   );
 
   const selectedStudent = students.find((s) => s.id === studentId);

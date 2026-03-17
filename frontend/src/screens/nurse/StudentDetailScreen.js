@@ -291,7 +291,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate("NewAllergy", { studentId: id })}
+            onPress={() => navigation.navigate("NewAllergy", { student_id: id })}
           >
             <Ionicons name="warning-outline" size={18} color={colors.warning} />
             <Text style={styles.actionButtonText}>Nueva alergia</Text>
