@@ -6,7 +6,7 @@ import StudentItem from '../../components/StudentItem';
 import api from '../../api/axios';
 import { Ionicons } from '@expo/vector-icons';
 
-const StudentsScreen = ({navigation}) => {
+const StudentsScreen = ({route, navigation}) => {
   const {user} = useContext(AuthContext);
 
   const [data, setData] = useState([]);
@@ -33,7 +33,7 @@ const StudentsScreen = ({navigation}) => {
 
   useEffect(()=>{
     loadStudents();
-  }, []);
+  }, [route.params?.created]);
 
   const onRefresh = useCallback(()=>{
     setRefreshing(true);
