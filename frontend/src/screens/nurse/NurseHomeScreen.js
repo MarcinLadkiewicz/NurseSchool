@@ -58,7 +58,7 @@
        <FlatList
          data={data?.recent_attentions || []}
          keyExtractor={(item) => item.id.toString()}
-         renderItem={({ item }) => <AttentionItem item={item} />}
+         renderItem={({ item }) => <AttentionItem item={item} navigation={navigation} />}
          refreshControl={
            <RefreshControl
              refreshing={refreshing}
