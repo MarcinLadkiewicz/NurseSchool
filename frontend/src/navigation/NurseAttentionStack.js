@@ -1,4 +1,3 @@
-import react from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import NewAttentionScreen from '../screens/nurse/NewAttentionScreen';
 import AttentionScreen from '../screens/nurse/AttentionScreen';
