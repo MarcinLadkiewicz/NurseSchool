@@ -116,7 +116,7 @@ exports.updateAllergy = async (req, res) => {
     const { allergy_type, allergy_description, severity} = req.body;
 
     const current = await pool.query(
-        'SELECT * FROM alleries WHERE id = $1',
+        'SELECT * FROM allergies WHERE id = $1',
         [id]
     );
 

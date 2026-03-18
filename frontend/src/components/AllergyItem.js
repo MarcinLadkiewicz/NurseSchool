@@ -11,7 +11,7 @@ const AllergyItem = ({ item, navigation}) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() =>
-        navigation.navigate("StudentDetail", { id: item.student_id })
+        navigation.navigate("EditAllergy", { allergy: item})
       }
     >
       {/* Avatar con iniciales */}

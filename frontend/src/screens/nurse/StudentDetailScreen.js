@@ -104,8 +104,8 @@ const StudentDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.editButton}
             onPress={() => {
-                console.log('student: ', student)
-                navigation.navigate("EditStudent", { student })
+              console.log("student: ", student);
+              navigation.navigate("EditStudent", { student });
             }}
           >
             <Ionicons name="create-outline" size={20} color={colors.primary} />
@@ -180,20 +180,22 @@ const StudentDetailScreen = ({ route, navigation }) => {
           <Text style={styles.sectionTitle}>ALERGIAS</Text>
           {allergies.length > 0 ? (
             allergies.map((allergy, index) => (
-              <View key={allergy.id}>
-                <View style={styles.infoRow}>
-                  <Text style={styles.infoLabel}>
-                    {allergy.allergy_type.charAt(0).toUpperCase() +
-                      allergy.allergy_type.slice(1)}
-                  </Text>
-                  <Text style={styles.infoValue}>
-                    {allergy.allergy_description}
-                  </Text>
+              
+                <View key={allergy.id}>
+                  <TouchableOpacity style={styles.infoRow} onPress={() => navigation.navigate('EditAllergy', {allergy})}>
+                    <Text style={styles.infoLabel}>
+                      {allergy.allergy_type.charAt(0).toUpperCase() +
+                        allergy.allergy_type.slice(1)}
+                    </Text>
+                    <Text style={styles.infoValue}>
+                      {allergy.allergy_description}
+                    </Text>
+                    <Ionicons name='chevron-forward' size={18} color={colors.primary}/>
+                  </TouchableOpacity>
+                  {index < allergies.length - 1 && (
+                    <View style={styles.divider} />
+                  )}
                 </View>
-                {index < allergies.length - 1 && (
-                  <View style={styles.divider} />
-                )}
-              </View>
             ))
           ) : (
             <Text style={styles.emptySection}>Sin alergias registradas</Text>
@@ -283,7 +285,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.actionButton}
             onPress={() =>
-              navigation.navigate("NewAttention", { studentId: id })
+              navigation.navigate("NewAttention", { student_id: id })
             }
           >
             <Ionicons name="pulse-outline" size={18} color={colors.primary} />
@@ -291,7 +293,9 @@ const StudentDetailScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigation.navigate("NewAllergy", { student_id: id })}
+            onPress={() =>
+              navigation.navigate("NewAllergy", { student_id: id })
+            }
           >
             <Ionicons name="warning-outline" size={18} color={colors.warning} />
             <Text style={styles.actionButtonText}>Nueva alergia</Text>
