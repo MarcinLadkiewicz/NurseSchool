@@ -1,5 +1,7 @@
 const getInitials = (name, surname) => {
-    `${name?.charAt(0) || ''}${surname?.charAt(0)||''}`.toUpperCase();
+    const first = name?.charAt(0) || "";
+    const last = surname?.charAt(0) || "";
+    return `${first}${last}`.toUpperCase();
 }
   
 
