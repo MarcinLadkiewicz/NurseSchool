@@ -2,11 +2,12 @@ import react from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import NurseHomeScreen from '../../screens/nurse/NurseHomeScreen';
+
 import SettingsScreen from '../../screens/shared/SettingsScreen';
 import NurseStudentStack from '../NurseStudentStack';
 import NurseAllergiesStack from '../NurseAllergyStack';
 import NurseAttentionStack from '../NurseAttentionStack';
+import NurseHomeStack from '../NurseHomeStack';
 import {darkTheme as colors} from '../../theme/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -33,7 +34,7 @@ return (
       }}>
     <Tab.Screen
       name="Inicio"
-      component={NurseHomeScreen}
+      component={NurseHomeStack}
       options={{
         tabBarIcon: ({focused, size, color}) => (
           <Ionicons
