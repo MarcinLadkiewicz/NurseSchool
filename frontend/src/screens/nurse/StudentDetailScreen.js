@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { darkTheme as colors } from "../../theme/colors";
 import formatTime from "../../utils/formatTime";
+import getInitials from '../../utils/getInitials';
 import api from "../../api/axios";
 
 const StudentDetailScreen = ({ route, navigation }) => {
@@ -47,12 +48,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
       age--;
     }
     return `${age} años`;
-  };
-
-  const getInitials = (name, surname) => {
-    const first = name?.charAt(0) || "";
-    const last = surname?.charAt(0) || "";
-    return `${first}${last}`.toUpperCase();
   };
 
   const getSeverityColor = (severity) => {
