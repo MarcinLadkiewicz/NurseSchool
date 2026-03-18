@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
-import { AuthContext } from '../../context/AuthContext';
 import {darkTheme as colors} from '../../theme/colors';
 import StudentItem from '../../components/StudentItem';
 import api from '../../api/axios';
 import { Ionicons } from '@expo/vector-icons';
 
 const StudentsScreen = ({route, navigation}) => {
-  const {user} = useContext(AuthContext);
 
   const [data, setData] = useState([]);
   const [inputText, setInputText] = useState('');
