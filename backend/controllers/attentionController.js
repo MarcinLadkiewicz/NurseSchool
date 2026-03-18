@@ -13,16 +13,25 @@ exports.getAllAttentions = async (req, res) => {
 
     if (student_id) {
       result = await pool.query(
-        "SELECT * FROM attentions WHERE student_id = $1 ORDER BY attention_date",
+        `SELECT a.*, s.name AS student_name, s.surname AS student_surname, s.course
+         FROM attentions a 
+         JOIN students s ON a.student_id = s.id
+         WHERE a.student_id = $1 ORDER BY attention_date`,
         [student_id],
       );
     } else if (attention_date) {
       result = await pool.query(
-        "SELECT * FROM attentions WHERE attention_date =$1 ORDER BY id",
+        `SELECT a.*, s.name AS student_name, s.surname AS student_surname, s.course
+         FROM attentions a
+         JOIN students s ON a.student_id = s.id
+         WHERE a.attention_date =$1 ORDER BY id`,
         [attention_date],
       );
     } else {
-      result = await pool.query("SELECT * FROM attentions");
+      result = await pool.query(`SELECT a.*, s.name AS student_name, s.surname AS student_surname, s.course
+         FROM attentions a 
+         JOIN students s ON a.student_id = s.id`
+      );
     }
 
     res.json(result.rows);

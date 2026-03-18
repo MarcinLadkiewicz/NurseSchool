@@ -3,10 +3,10 @@ import react from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import NurseHomeScreen from '../../screens/nurse/NurseHomeScreen';
-import NewAttentionScreen from '../../screens/nurse/NewAttentionScreen';
 import SettingsScreen from '../../screens/shared/SettingsScreen';
 import NurseStudentStack from '../NurseStudentStack';
 import NurseAllergiesStack from '../NurseAllergyStack';
+import NurseAttentionStack from '../NurseAttentionStack';
 import {darkTheme as colors} from '../../theme/colors';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -57,7 +57,7 @@ return (
         )
       }}
     />
-    <Tab.Screen name="Atenciones" component={NewAttentionScreen} options={{
+    <Tab.Screen name="Atenciones" component={NurseAttentionStack} options={{
         tabBarIcon : ({focused, size, color}) => (
             <Ionicons
                 name={focused ? 'pulse' : 'pulse-outline'}
