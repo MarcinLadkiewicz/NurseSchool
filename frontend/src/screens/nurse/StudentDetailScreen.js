@@ -175,22 +175,30 @@ const StudentDetailScreen = ({ route, navigation }) => {
           <Text style={styles.sectionTitle}>ALERGIAS</Text>
           {allergies.length > 0 ? (
             allergies.map((allergy, index) => (
-              
-                <View key={allergy.id}>
-                  <TouchableOpacity style={styles.infoRow} onPress={() => navigation.navigate('EditAllergy', {allergy})}>
-                    <Text style={styles.infoLabel}>
-                      {allergy.allergy_type.charAt(0).toUpperCase() +
-                        allergy.allergy_type.slice(1)}
-                    </Text>
-                    <Text style={styles.infoValue}>
-                      {allergy.allergy_description}
-                    </Text>
-                    <Ionicons name='chevron-forward' size={18} color={colors.primary}/>
-                  </TouchableOpacity>
-                  {index < allergies.length - 1 && (
-                    <View style={styles.divider} />
-                  )}
-                </View>
+              <View key={allergy.id}>
+                <TouchableOpacity
+                  style={styles.infoRow}
+                  onPress={() =>
+                    navigation.navigate("EditAllergy", { allergy })
+                  }
+                >
+                  <Text style={styles.infoLabel}>
+                    {allergy.allergy_type.charAt(0).toUpperCase() +
+                      allergy.allergy_type.slice(1)}
+                  </Text>
+                  <Text style={styles.infoValue}>
+                    {allergy.allergy_description}
+                  </Text>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={18}
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+                {index < allergies.length - 1 && (
+                  <View style={styles.divider} />
+                )}
+              </View>
             ))
           ) : (
             <Text style={styles.emptySection}>Sin alergias registradas</Text>
@@ -203,14 +211,24 @@ const StudentDetailScreen = ({ route, navigation }) => {
             <Text style={styles.sectionTitle}>PATOLOGÍAS</Text>
             {pathologies.map((pathology, index) => (
               <View key={pathology.id}>
-                <View style={styles.infoRow}>
+                <TouchableOpacity
+                  style={styles.infoRow}
+                  onPress={() =>
+                    navigation.navigate("EditPathology", { pathology })
+                  }
+                >
                   <Text style={styles.infoLabel}>
                     {pathology.pathology_name}
                   </Text>
                   <Text style={styles.infoValue} numberOfLines={2}>
                     {pathology.pathology_description}
                   </Text>
-                </View>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={18}
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
                 {pathology.added_file && (
                   <TouchableOpacity style={styles.fileButton}>
                     <Ionicons
@@ -294,6 +312,19 @@ const StudentDetailScreen = ({ route, navigation }) => {
           >
             <Ionicons name="warning-outline" size={18} color={colors.warning} />
             <Text style={styles.actionButtonText}>Nueva alergia</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() =>
+              navigation.navigate("NewPathology", { studentId: id })
+            }
+          >
+            <Ionicons
+              name="document-text-outline"
+              size={18}
+              color={colors.success}
+            />
+            <Text style={styles.actionButtonText}>Patología</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -497,7 +528,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 6,
     backgroundColor: colors.surface,
     borderRadius: 14,
     paddingVertical: 14,
@@ -505,7 +536,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
   },
   actionButtonText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "600",
     color: colors.textPrimary,
   },
