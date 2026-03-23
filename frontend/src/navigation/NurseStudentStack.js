@@ -8,6 +8,7 @@ import EditStudentScreen from '../screens/nurse/EditStudentScreen';
 import EditAllergy from '../screens/nurse/EditAllergyScreen';
 import AttentionDetailScreen from '../screens/nurse/AttentionDetailScreen';
 import NewPathologyScreen from '../screens/nurse/NewPathologyScreen';
+import EditPathology from '../screens/nurse/EditPathologyScreen';
 
 
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ const NurseStudentStack = () => (
     <Stack.Screen name="NewAttention" component={NewAttentionScreen} />
     <Stack.Screen name="AttentionDetail" component={AttentionDetailScreen}/>
     <Stack.Screen name="NewPathology" component={NewPathologyScreen} />
+    <Stack.Screen name="EditPathology" component={EditPathology}/>
   </Stack.Navigator>
 );
     
