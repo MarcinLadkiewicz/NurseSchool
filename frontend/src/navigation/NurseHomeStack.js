@@ -8,6 +8,7 @@ const NurseHomeStack = () => (
     <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name='Home' component={NurseHomeScreen}/>
         <Stack.Screen name='AttentionDetail' component={AttentionDetailScreen}/>
+        
     </Stack.Navigator>
 )
 
