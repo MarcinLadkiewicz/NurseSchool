@@ -4,6 +4,7 @@ const auth = require('../middlewares/authMiddleware');
 const role = require('../middlewares/roleMiddleware');
 
 router.post('/', auth, role(['enfermero']), ctrl.registerPathology);
+router.put('/', auth, role(['enfermero']), ctrl.updatePathology);
 router.get('/students/:student_id', auth, role(['enfermero', 'padre']), ctrl.getByStudentId);
 //----
 //Subir informe queda pendiente con Multer más tarde.

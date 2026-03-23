@@ -1,9 +1,5 @@
 const pool = require('../config/db');
 
-//-----------------
-//REGISTER PATHOLOGY
-//-----------------
-
 exports.registerPathology = async (req, res) => {
 
     try{   
@@ -39,11 +35,6 @@ exports.registerPathology = async (req, res) => {
     }
 }
 
-//-----------------
-//GET BY STUDENT ID
-//-----------------
-
-
 exports.getByStudentId = async (req, res) => {
   try {
 
@@ -74,14 +65,39 @@ exports.getByStudentId = async (req, res) => {
   }
 };
 
+exports.updatePathology = async (req, res) => {
+    
+    try{
+        const { id } = req.params;
+        const { pathology_name, pathology_description } = req.body;
+
+        const current = await pool.query(
+            'SELECT * FROM pathologies WHERE id = $1', 
+            [id]
+        );
+
+         if(current.rows.length === 0){
+            return res.status(404).json({error: 'Patología no encontrada'});
+            }
+
+        const pathology = current.rows[0];
 
 
+        const result = await pool.query(
+            'UPDATE pathologies SET pathology_name=$1, pathology_description=$2 WHERE id=$3 RETURNING *',
+            [pathology_name || pathology.pathology_name, pathology_description || pathology.pathology_description, id]
+        )
+    
+        return res.json({
+            message: 'Patología actualizada',
+            result: result.rows[0]
+        });
+    } catch (err){
+        console.error(err);
+        return res.status(500).json({error: 'Error en el servidor'});
+    }
 
-
-
-
-
-
+}
 
 //-----------------
 //UPLOAD FILE
