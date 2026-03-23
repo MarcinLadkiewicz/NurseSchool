@@ -70,7 +70,7 @@ const NewAttentionScreen = ({route, navigation}) => {
         actuation_description: actuationDescription || null,
       });
       Alert.alert('Atención Registrada', 'La atención se registró correctamente')
-      navigation.navigate('Inicio');
+      navigation.navigate('Home');
     } catch (err){
       const message = err.response?.data?.err || 'Error de conexión.';
       Alert.alert('Error', message);

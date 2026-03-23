@@ -44,7 +44,6 @@
      loadDashboard();
    }, []);
 
-   // Pantalla de carga
    if (loading) {
      return (
        <View style={[styles.container, styles.center]}>
@@ -68,7 +67,6 @@
          }
          ListHeaderComponent={
            <>
-             {/* Header: saludo + campana */}
              <View style={styles.header}>
                <View>
                  <Text style={styles.greeting}>{getGreeting()}</Text>
@@ -84,7 +82,6 @@
                </TouchableOpacity>
              </View>
 
-             {/* Tarjetas de estadísticas */}
              <View style={styles.statsRow}>
                <StatCard
                  label="HOY"
@@ -107,7 +104,7 @@
              <View style={styles.actionsRow}>
                <TouchableOpacity
                  style={styles.primaryButton}
-                 onPress={() => navigation.navigate("Atenciones")}
+                 onPress={() => navigation.navigate("NewAttention")}
                >
                  <Ionicons name="add" size={20} color="#fff" />
                  <Text style={styles.primaryButtonText}>Nueva atención</Text>
@@ -125,7 +122,6 @@
                </TouchableOpacity>
              </View>
 
-             {/* Título sección atenciones recientes */}
              <Text style={styles.sectionTitle}>Atenciones recientes</Text>
            </>
          }
