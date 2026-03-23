@@ -75,7 +75,7 @@ const EditPathology = ({route, navigation}) => {
                     {loading ? (
                         <ActivityIndicator color={colors.primary}/>
                     ) : (
-                        <Text style={styles.submitText}>Guardar cambios</Text>
+                        <Text style={styles.submitBtnText}>Guardar cambios</Text>
                     )}
                 </TouchableOpacity>
             </ScrollView>
@@ -84,7 +84,76 @@ const EditPathology = ({route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  scrollContent: {
+    padding: 20,
+    paddingTop: 60,
+    paddingBottom: 40,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  backButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 12,
+    backgroundColor: colors.surface,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: colors.textPrimary,
+    marginLeft: 14,
+  },
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: colors.primary,
+    letterSpacing: 0.5,
+    marginBottom: 12,
+  },
+  inputContainer: {
+    backgroundColor: colors.inputBg,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: 14,
+  },
+  input: {
+    paddingVertical: 14,
+    fontSize: 15,
+    color: colors.textPrimary,
+  },
+  submitBtn: {
+    backgroundColor: colors.primary,
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: "center",
+    marginTop: 6,
+  },
+  submitBtnText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  
 });
 
 export default EditPathology;
