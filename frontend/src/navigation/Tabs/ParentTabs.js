@@ -2,7 +2,7 @@ import react from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ParentsHomeScreen from '../../screens/parents/ParentsHomeScreen';
-import ParentStudentScreen from '../../screens/parents/ParentStudentScreen';
+import ParentChildStack from '../ParentChildStack';
 import ParentAttentionScreen from '../../screens/parents/ParentAttentionScreen';
 import ParentAllergieScreen from '../../screens/parents/ParentAllergieScreen';
 import SettingsScreen from '../../screens/shared/SettingsScreen';
@@ -47,7 +47,7 @@ const ParentTabs = () => {
         />
         <Tab.Screen
           name="Hijos"
-          component={ParentStudentScreen}
+          component={ParentChildStack}
           options={{
             tabBarIcon: ({focused, size, color}) => (
               <Ionicons
