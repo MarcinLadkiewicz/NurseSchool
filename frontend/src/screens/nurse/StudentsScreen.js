@@ -154,6 +154,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: colors.textPrimary,
   },
+  emptyContainer: {
+  alignItems: 'center',
+  paddingVertical: 40,
+},
+  emptyText: {
+  fontSize: 14,
+  color: colors.textMuted,
+  marginTop: 12,
+  },
 });
 
 export default StudentsScreen;
