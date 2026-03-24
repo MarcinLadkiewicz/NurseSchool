@@ -2,10 +2,10 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../theme/colors';
 
-const StudentItem = ({ item, navigation }) => (
+const StudentItem = ({ item, navigation, detailRoute = 'Detail' }) => (
   <TouchableOpacity
     style={styles.studentItem}
-    onPress={() => navigation.navigate("Detail", { id: item.id })}
+    onPress={() => navigation.navigate(detailRoute, { id: item.id })}
   >
     {/*Icono Avatar*/}
     <View style={styles.avatar}>
