@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { darkTheme as colors } from "../../theme/colors";
 import formatTime from "../../utils/formatTime";
 import getInitials from '../../utils/getInitials';
+import getSeverityStyle from '../../utils/getSeverityStyle';
 import api from "../../api/axios";
 
 const StudentDetailScreen = ({ route, navigation }) => {
@@ -50,18 +51,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
     return `${age} años`;
   };
 
-  const getSeverityColor = (severity) => {
-    switch (severity) {
-      case "alta":
-        return { bg: colors.dangerBg, text: colors.danger };
-      case "media":
-        return { bg: colors.warningBg, text: colors.warning };
-      case "baja":
-        return { bg: colors.successBg, text: colors.success };
-      default:
-        return { bg: colors.dangerBg, text: colors.danger };
-    }
-  };
+  
 
   if (loading) {
     return (
@@ -125,7 +115,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
           {allergies.length > 0 && (
             <View style={styles.badgesRow}>
               {allergies.map((allergy) => {
-                const severityColor = getSeverityColor(allergy.severity);
+                const severityColor = getSeverityStyle(allergy.severity);
                 return (
                   <View
                     key={allergy.id}
