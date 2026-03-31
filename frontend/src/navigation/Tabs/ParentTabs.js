@@ -1,7 +1,7 @@
 import react from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import ParentsHomeScreen from '../../screens/parents/ParentsHomeScreen';
+import ParentHomeStack from '../ParentHomeStack';
 import ParentChildStack from '../ParentChildStack';
 import ParentAttentionScreen from '../../screens/parents/ParentAttentionScreen';
 import ParentAllergieScreen from '../../screens/parents/ParentAllergieScreen';
@@ -34,7 +34,7 @@ const ParentTabs = () => {
       >
         <Tab.Screen
           name="Inicio"
-          component={ParentsHomeScreen}
+          component={ParentHomeStack}
           options={{
             tabBarIcon: ({ focused, size, color }) => (
               <Ionicons
