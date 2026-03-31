@@ -5,7 +5,7 @@ const role = require('../middlewares/roleMiddleware');
 
 
 router.get('/', auth, role(['enfermero']), ctrl.getAllAttentions);
-router.get('/:id',  auth, role(['enfermero']), ctrl.getById);
+router.get('/:id',  auth, role(['enfermero', 'padre']), ctrl.getById);
 router.get('/students/:id', auth, role(['enfermero']), ctrl.getByStudentId);
 
 router.post('/', auth, role(['enfermero']), ctrl.createAttention);
