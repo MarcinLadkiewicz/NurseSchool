@@ -25,7 +25,7 @@
 
    const loadDashboard = async () => {
      try {
-       const res = await api.get("/nurse/dashboard");
+       const res = await api.get("/dashboard/nurseDashboard");
        setData(res.data);
      } catch (err) {
        console.log("Error cargando dashboard:", err.message);

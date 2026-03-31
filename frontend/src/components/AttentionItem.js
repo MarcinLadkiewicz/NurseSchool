@@ -71,11 +71,12 @@ const styles = StyleSheet.create({
   },
   attentionInfo: {
     flex: 1,
+    minWidth: 0,
   },
   attentionName: {
     fontSize: 15,
     fontWeight: "600",
-    color: colors.textPrimary,
+    color: colors.primary,
   },
   attentionReason: {
     fontSize: 13,
