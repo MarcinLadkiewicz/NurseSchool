@@ -165,5 +165,25 @@ exports.deleteAllergy = async (req, res) => {
   }
 };
 
+exports.getAllergiesByMyChildren = async (req, res) => {
+  try {
+    const padre_id = req.user.id;
+
+    const result = await pool.query(
+      `SELECT a.*, s.name AS student_name, s.surname AS student_surname, s.course
+       FROM allergies a
+       LEFT JOIN students s ON a.student_id = s.id
+       WHERE s.padre_id = $1
+       ORDER BY s.name`,
+      [padre_id],
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error del servidor" });
+  }
+};
+
 
 //--- FALTA MANEJO DE ARCHIVOS CON MULTER, SE HARÁ DESPUES
