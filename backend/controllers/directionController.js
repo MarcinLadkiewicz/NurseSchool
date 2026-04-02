@@ -16,9 +16,9 @@ exports.getAllAttentions = async (req, res) => {
     const result = await pool.query(
         `
         SELECT a.*, s.name AS student_name, s.surname AS student_surname 
-         FROM attentions
+         FROM attentions a
          JOIN students s ON a.student_id = s.id 
-         ORDER BY attention_date 
+         ORDER BY a.attention_date 
          LIMIT $1 OFFSET $2
          `,
          [limit, offset]
@@ -55,7 +55,7 @@ exports.getAllAllergies = async (req, res) => {
         FROM allergies a
         JOIN students s ON
         a.student_id = s.id
-        ORDER BY alergy_type
+        ORDER BY a.allergy_type
         LIMIT $1
         OFFSET $2
         `,
