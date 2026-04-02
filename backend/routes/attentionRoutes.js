@@ -5,6 +5,7 @@ const role = require('../middlewares/roleMiddleware');
 
 
 router.get('/', auth, role(['enfermero']), ctrl.getAllAttentions);
+router.get('/my-children', auth, role(['padre']), ctrl.getAttentionByMyChildren);
 router.get('/:id',  auth, role(['enfermero', 'padre']), ctrl.getById);
 router.get('/students/:id', auth, role(['enfermero']), ctrl.getByStudentId);
 
