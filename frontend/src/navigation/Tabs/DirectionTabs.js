@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 const DirectionTab = () => {
     return (
       <Tab.Navigator
-        screenOption={{
+        screenOptions={{
           headerShown: false,
           tabBarStyle: {
             backgroundColor: colors.surface,
