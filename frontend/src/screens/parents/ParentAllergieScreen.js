@@ -59,7 +59,7 @@ const ParentAllergieScreen = ({navigation}) => {
         data={filtered}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <AllergyItem item={item} navigation={navigation} />
+          <AllergyItem item={item} navigation={navigation} readOnly/>
         )}
         refreshControl={
           <RefreshControl

@@ -1,5 +1,5 @@
 import {useEffect, useState, useCallback, useContext} from 'react';
-import {View, Text, TextInput, ScrollView,FlatList, RefreshControl,ActivityIndicator, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TextInput, FlatList, RefreshControl,ActivityIndicator, TouchableOpacity, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
 import AttentionItem from '../../components/AttentionItem';
