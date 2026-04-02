@@ -1,17 +1,93 @@
-import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { AuthContext } from "../../context/AuthContext";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, Text, TextInput, FlatList, ActivityIndicator, ScrollView, TouchableOpacity, StyleSheet, RefreshControl } from "react-native";
+import api from "../../api/axios";
+import AttentionItem from "../../components/AttentionItem";
+import { Ionicons } from '@expo/vector-icons';
+import {darkTheme as colors} from '../../theme/colors';
 
-const ParentAttentionScreen = () => {
-  const { user, logout } = useContext(AuthContext);
+
+const ParentAttentionScreen = ({navigation}) => {
+
+  const [data, setData] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadAttentions = async () => {
+    try{
+      const res = await api.get('attentions/my-children');
+      setData(res.data);
+    } catch (err){
+      console.log('Error cargando las atenciones', err.message);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  } 
+
+  const filtered = data.filter((item) => 
+    `${item.student_name} ${item.student_surname} ${item.reason}`
+    .toLowerCase()
+    .includes(inputText.toLowerCase())
+  );
+
+  useEffect(() => {
+    loadAttentions();
+  }, []);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadAttentions();
+  }, []);
+
+  if(loading) {
+    return (
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator size='large' color={colors.primary}/>
+      </View>
+    )
+  }
+
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Panel Padres</Text>
-      <Text style={styles.sub}>Bienvenido, {user?.nombre}</Text>
-      <TouchableOpacity style={styles.boton} onPress={logout}>
-        <Text style={styles.botonTexto}>Cerrar sesión</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={filtered}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({item}) => (<AttentionItem item={item} navigation={navigation} readOnly/>
+        )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={colors.primary}
+            />
+        }
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons name='pulse-outline' size={48} color={colors.textMuted}/>
+            <Text style={styles.emptyText}>No se encontraron atenciones</Text>
+          </View>
+        }
+        ListHeaderComponent={
+          <>
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Atenciones</Text>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name='search-outline' size={18} color={colors.textMuted} style={{marginRight: 8}}/>
+            <TextInput 
+              style={styles.input}
+              placeholder='Buscar alumno o causa...'
+              placeholderTextColor={colors.textMuted}
+              value={inputText}
+              onChangeText={setInputText}
+            />
+          </View>
+          </>
+        }
+      />
     </View>
   );
 };
@@ -19,19 +95,52 @@ const ParentAttentionScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background,
+    paddingTop: 60,
+    paddingHorizontal: 20,
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+
+  center: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5F7FA",
   },
-  title: { fontSize: 24, fontWeight: "bold", color: "#0D2B4E" },
-  sub: { fontSize: 16, color: "#5A7A9A", marginTop: 8 },
-  boton: {
-    backgroundColor: "#E74C3C",
-    borderRadius: 10,
-    padding: 14,
-    marginTop: 30,
+  title: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: colors.textPrimary,
   },
-  botonTexto: { color: "#fff", fontWeight: "bold" },
+  addAttention: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: colors.accentSoft,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: colors.inputBg,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: colors.border,
+    paddingHorizontal: 14,
+    marginBottom: 16,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: 14,
+    fontSize: 15,
+    color: colors.textPrimary,
+  },
 });
 
 export default ParentAttentionScreen;
