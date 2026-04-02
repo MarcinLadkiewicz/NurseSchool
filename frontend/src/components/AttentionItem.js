@@ -3,10 +3,19 @@ import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../theme/colors';
 import formatTime from '../utils/formatTime';
 
-const AttentionItem = ({ item, navigation }) => (
+const AttentionItem = (props) => {
+  const item = props.item;
+  const navigation = props.navigation;
+  const readOnly = props.readOnly || false;
+
+return (
   <TouchableOpacity
     style={styles.attentionCard}
-    onPress={() => navigation.navigate("AttentionDetail", { id: item.id })}
+    onPress={() => {
+      if(!readOnly) {
+        navigation.navigate("AttentionDetail", { id: item.id });
+      }
+    }}
   >
     {/* Icono avatar */}
     <View style={styles.avatar}>
@@ -47,6 +56,7 @@ const AttentionItem = ({ item, navigation }) => (
     </View>
   </TouchableOpacity>
 );
+}
 
 
 const styles = StyleSheet.create({

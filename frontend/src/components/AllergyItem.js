@@ -4,24 +4,27 @@ import { darkTheme as colors } from "../theme/colors";
 import getSeverityStyle from '../utils/getSeverityStyle';
 import getInitials from "../utils/getInitials";
 
-const AllergyItem = ({ item, navigation}) => {
+const AllergyItem = (props) => {
+  const item = props.item;
+  const navigation = props.navitation;
+  const readOnly = props.readOnly || false;
   const severity = getSeverityStyle(item.severity);
 
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() =>
-        navigation.navigate("EditAllergy", { allergy: item})
-      }
+      onPress={() => {
+        if(!readOnly){
+          navigation.navigate("EditAllergy", { allergy: item})
+        }
+      }}
     >
-      {/* Avatar con iniciales */}
       <View style={[styles.avatar, { backgroundColor: severity.bg }]}>
         <Text style={[styles.avatarText, { color: severity.text }]}>
           {getInitials(item.student_name, item.student_surname)}
         </Text>
       </View>
 
-      {/* Info */}
       <View style={styles.info}>
         <Text style={styles.name}>
           {item.student_name} {item.student_surname}
