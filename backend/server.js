@@ -14,6 +14,7 @@ app.use('/api/allergies', require('./routes/allergyRoutes'));
 app.use('/api/pathologies', require('./routes/pathologyRoutes'));
 app.use('/api/attentions', require('./routes/attentionRoutes'));
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
+app.use('/api/direction', require('./routes/directionRoutes'));
 
 
 const PORT = process.env.PORT || 3000;
