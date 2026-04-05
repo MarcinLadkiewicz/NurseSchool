@@ -314,7 +314,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
               size={18}
               color={colors.success}
             />
-            <Text style={styles.actionButtonText}>Patología</Text>
+            <Text style={styles.actionButtonText}>Nueva Patología</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
