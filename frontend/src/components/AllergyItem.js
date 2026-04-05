@@ -6,7 +6,7 @@ import getInitials from "../utils/getInitials";
 
 const AllergyItem = (props) => {
   const item = props.item;
-  const navigation = props.navitation;
+  const navigation = props.navigation;
   const readOnly = props.readOnly || false;
   const severity = getSeverityStyle(item.severity);
 
