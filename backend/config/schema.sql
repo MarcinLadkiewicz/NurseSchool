@@ -49,6 +49,6 @@ CREATE TABLE IF NOT EXISTS pathologies (
     student_id INT NOT NULL REFERENCES students(id),
     pathology_name VARCHAR(100) NOT NULL,
     pathology_description TEXT,
-    added_file VARCHAR(255),
+    added_file VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
