@@ -214,7 +214,7 @@ const StudentDetailScreen = ({ route, navigation }) => {
                     color={colors.primary}
                   />
                 </TouchableOpacity>
-              
+
                 {pathology.added_file && (
                   <TouchableOpacity
                     style={styles.fileButton}
@@ -241,15 +241,34 @@ const StudentDetailScreen = ({ route, navigation }) => {
           </View>
         )}
 
-        {/* Sección Historial */}
         <View style={styles.card}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>HISTORIAL</Text>
-            {attentions.length > 3 && (
-              <TouchableOpacity>
-                <Text style={styles.viewAll}>Ver todo →</Text>
-              </TouchableOpacity>
-            )}
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              {attentions.length > 0 && (
+                <TouchableOpacity
+                  onPress={() =>
+                    downloadPdf(
+                      `/api/attentions/pdf/history/${id}`,
+                      `historial_${id}.pdf`,
+                    )
+                  }
+                >
+                  <Ionicons
+                    name="download-outline"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </TouchableOpacity>
+              )}
+              {attentions.length > 3 && (
+                <TouchableOpacity>
+                  <Text style={styles.viewAll}>Ver todo →</Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
           {attentions.length > 0 ? (
             attentions.slice(0, 5).map((attention, index) => (
