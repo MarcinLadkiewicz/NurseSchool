@@ -1,4 +1,6 @@
 const pool = require('../config/db');
+const fs = require('fs');
+const path = require('path');
 
 exports.registerPathology = async (req, res) => {
 
@@ -19,8 +21,8 @@ exports.registerPathology = async (req, res) => {
         }
 
         const result = await pool.query(
-            'INSERT INTO pathologies (student_id, pathology_name, pathology_description) VALUES ($1, $2, $3) RETURNING *',
-            [student_id, pathology_name, pathology_description || null]
+            'INSERT INTO pathologies (student_id, pathology_name, pathology_description, added_file) VALUES ($1, $2, $3, $4) RETURNING *',
+            [student_id, pathology_name, pathology_description || null, req.file ? req.file.filename : null]
         );
 
         return res.status(201).json({
@@ -82,10 +84,18 @@ exports.updatePathology = async (req, res) => {
 
         const pathology = current.rows[0];
 
+        if(req.file && pathology.added_file) {
+            const previousFile = path.join(__dirname, '..', 'uploads', pathology.added_file);
+            if(fs.existsSync(previousFile)){
+                fs.unlinkSync(previousFile);
+            }
+        }
+
+
 
         const result = await pool.query(
-            'UPDATE pathologies SET pathology_name=$1, pathology_description=$2 WHERE id=$3 RETURNING *',
-            [pathology_name || pathology.pathology_name, pathology_description || pathology.pathology_description, id]
+            'UPDATE pathologies SET pathology_name=$1, pathology_description=$2, added_file=$3 WHERE id=$4 RETURNING *',
+            [pathology_name || pathology.pathology_name, pathology_description || pathology.pathology_description,req.file ? req.file.filename : pathology.added_file ,id]
         )
     
         return res.json({
@@ -98,7 +108,3 @@ exports.updatePathology = async (req, res) => {
     }
 
 }
-
-//-----------------
-//UPLOAD FILE
-//-----------------
