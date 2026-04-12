@@ -7,7 +7,6 @@ const upload = require('../middlewares/uploadMiddleware');
 router.post('/', auth, role(['enfermero']),upload.single('added_file') ,ctrl.registerPathology);
 router.put('/:id', auth, role(['enfermero']),upload.single('added_file') ,ctrl.updatePathology);
 router.get('/students/:student_id', auth, role(['enfermero', 'padre']), ctrl.getByStudentId);
-//----
-//Subir informe queda pendiente con Multer más tarde.
+
 
 module.exports = router;
