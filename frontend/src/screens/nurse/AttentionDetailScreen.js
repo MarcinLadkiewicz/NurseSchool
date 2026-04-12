@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
-import {View, Text, ScrollView, TouchableOpacity,ActivityIndicator,  StyleSheet} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity,ActivityIndicator,Alert,  StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import getInitials from '../../utils/getInitials';
+import downloadPdf from '../../utils/downloadPdf';
 import {darkTheme as colors} from '../../theme/colors';
 import api from '../../api/axios';
 
@@ -112,23 +113,7 @@ const AttentionDetailScreen = ({route, navigation}) => {
             )}
           </View>
 
-          {/* Archivo adjunto */}
-          {added_file && (
-            <View style={styles.card}>
-              <Text style={styles.sectionTitle}>ARCHIVO ADJUNTO</Text>
-              <TouchableOpacity style={styles.fileRow}>
-                <Ionicons
-                  name="document-attach-outline"
-                  size={20}
-                  color={colors.primary}
-                />
-                <Text style={styles.fileText}>{added_file}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-
-          {/* Botón exportar PDF (visual) */}
-          <TouchableOpacity style={styles.pdfButton}>
+          <TouchableOpacity style={styles.pdfButton} onPress={() => downloadPdf(`/attentions/pdf/attention/${id}`, `atencion_id${id}.pdf`)}>
             <Ionicons
               name="download-outline"
               size={18}

@@ -12,6 +12,7 @@ import { darkTheme as colors } from "../../theme/colors";
 import formatTime from "../../utils/formatTime";
 import getInitials from '../../utils/getInitials';
 import getSeverityStyle from '../../utils/getSeverityStyle';
+import downloadPdf from "../../utils/downloadPdf";
 import api from "../../api/axios";
 
 const StudentDetailScreen = ({ route, navigation }) => {
@@ -77,7 +78,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Header con botón volver */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
@@ -97,7 +97,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Tarjeta principal: avatar + nombre + curso + badges */}
         <View style={styles.card}>
           <View style={styles.avatarLarge}>
             <Text style={styles.avatarText}>
@@ -111,7 +110,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
             {student.course} · {getAge(student.birthdate)}
           </Text>
 
-          {/* Badges de alergias */}
           {allergies.length > 0 && (
             <View style={styles.badgesRow}>
               {allergies.map((allergy) => {
@@ -144,7 +142,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
           )}
         </View>
 
-        {/* Sección Contacto */}
         {student.parent_name && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>CONTACTO</Text>
@@ -160,7 +157,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
           </View>
         )}
 
-        {/* Sección Alergias */}
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>ALERGIAS</Text>
           {allergies.length > 0 ? (
@@ -195,7 +191,6 @@ const StudentDetailScreen = ({ route, navigation }) => {
           )}
         </View>
 
-        {/* Sección Patologías */}
         {pathologies.length > 0 && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>PATOLOGÍAS</Text>
@@ -219,8 +214,17 @@ const StudentDetailScreen = ({ route, navigation }) => {
                     color={colors.primary}
                   />
                 </TouchableOpacity>
+              
                 {pathology.added_file && (
-                  <TouchableOpacity style={styles.fileButton}>
+                  <TouchableOpacity
+                    style={styles.fileButton}
+                    onPress={() =>
+                      downloadPdf(
+                        `/uploads/${pathology.added_file}`,
+                        pathology.added_file,
+                      )
+                    }
+                  >
                     <Ionicons
                       name="document-attach-outline"
                       size={14}

@@ -56,7 +56,7 @@ const EditPathology = ({route, navigation}) => {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             Alert.alert('Patología actualizada correctamente');
-            navigation.goBack();
+            navigation.navigate({name: 'StudentDeatail', params: { updated: Date.now()}, merge: true});
         } catch (err){
             const message = err.response?.data?.error || 'Error de conexión';
             return Alert.alert('Error', message);
