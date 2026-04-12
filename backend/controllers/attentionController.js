@@ -1,8 +1,5 @@
 const pool = require('../config/db');
-
-//-----------------------
-//LIST ALL ATTENTIONS
-//-----------------------
+const PDFDocument = require('pdfkit');
 
 exports.getAllAttentions = async (req, res) => {
   try {
@@ -42,10 +39,6 @@ exports.getAllAttentions = async (req, res) => {
 };   
 
 
-//---------------------
-// LIST BY ATTENTION ID
-//---------------------
-
 exports.getById = async (req, res) => {
 
     try{
@@ -75,9 +68,6 @@ exports.getById = async (req, res) => {
     }
 }
 
-//------------------------
-// LIST BY STUDENT ID
-//------------------------ 
 
 exports.getByStudentId = async (req, res) => {
     try{
@@ -122,9 +112,6 @@ exports.getAttentionByMyChildren = async (req, res) => {
         res.status(500).json({error: 'Error del servidor.'});
     }
 }
-//---------------------
-// CREATE ATTENTION
-//---------------------
 
 
 exports.createAttention = async (req, res) => {
@@ -162,3 +149,174 @@ exports.createAttention = async (req, res) => {
 }
 
 
+const drawStudentHeader = (doc, student) => {
+    doc
+      .fontSize(20)
+      .font("Helvetica-Bold")
+      .text("Enfermería Escolar", { align: "center" });
+    doc.moveDown(0.5);
+    doc
+      .fontSize(10)
+      .font("Helvetica")
+      .fillColor("#666")
+      .text(`Generado el ${new Date().toLocaleDateString("es-ES")}`, {
+        align: "center",
+      });
+    doc.moveDown(1);
+
+    doc
+      .fontSize(12)
+      .font("Helvetica-Bold")
+      .fillColor("#000")
+      .text("Datos del alumno");
+    doc.moveDown(0.3);
+    doc.fontSize(10).font("Helvetica").fillColor("#333");
+    doc.text(`Nombre: ${student.name} ${student.surname}`);
+    doc.text(`Curso: ${student.course}`);
+    if (student.birthdate) {
+      doc.text(
+        `Fecha de nacimiento: ${new Date(student.birthdate).toLocaleDateString("es-ES")}`,
+      );
+    }
+    doc.moveDown(1);
+    doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke("#ccc");
+    doc.moveDown(1);
+}
+
+exports.generateAttentionPdf = async (req, res) => {
+    try{
+        const { id } = req.params;
+
+        const result = await pool.query(
+            `
+            SELECT a.*, s.name, s.surname, s.course, s.birthdate,
+            u.name AS nurse_name
+            FROM attentions a
+            JOIN students s ON a.student_id = s.id
+            JOIN users u ON a.enfermero_id = u.id
+            WHERE a.id = $1
+            `, [id]
+        );
+
+        if(result.rows.length === 0) {
+            return res.status(404).json({error: 'Atención no encontrada'});
+        }
+
+        const att = result.rows[0];
+        const doc = new PDFDocument({margin: 50});
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `inline; filename=atencion_${id}.pdf`);
+        doc.pipe(res);
+
+        drawStudentHeader(doc, att);
+        doc
+          .fontSize(14)
+          .font("Helvetica-Bold")
+          .fillColor("#000")
+          .text("Informe de Atención");
+        doc.moveDown(0.5);
+
+        doc.fontSize(10).font("Helvetica").fillColor("#333");
+        doc.text(
+          `Fecha: ${new Date(att.attention_date).toLocaleString("es-ES")}`,
+        );
+        doc.text(`Enfermero/a: ${att.nurse_name}`);
+        doc.moveDown(0.5);
+
+        doc.font("Helvetica-Bold").text("Motivo:");
+        doc.font("Helvetica").text(att.reason);
+        doc.moveDown(0.5);
+
+        doc.font("Helvetica-Bold").text("Actuación:");
+        doc.font("Helvetica").text(att.actuation);
+        doc.moveDown(0.5);
+
+        if (att.actuation_description) {
+          doc.font("Helvetica-Bold").text("Descripción detallada:");
+          doc.font("Helvetica").text(att.actuation_description);
+        }
+
+        doc.end();
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Error generando el PDF" });
+    }
+}
+
+exports.generateHistoryPdf = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+
+    const student = await pool.query("SELECT * FROM students WHERE id = $1", [
+      studentId,
+    ]);
+
+    if (student.rows.length === 0) {
+      return res.status(404).json({ error: "Alumno no encontrado" });
+    }
+
+    const attentions = await pool.query(
+      `SELECT a.*, u.name AS nurse_name
+             FROM attentions a
+             JOIN users u ON a.enfermero_id = u.id
+             WHERE a.student_id = $1
+             ORDER BY a.attention_date DESC`,
+      [studentId],
+    );
+
+    if (attentions.rows.length === 0) {
+      return res.status(404).json({ error: "No hay atenciones registradas" });
+    }
+
+    const doc = new PDFDocument({ margin: 50 });
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `inline; filename=historial_${studentId}.pdf`,
+    );
+    doc.pipe(res);
+
+    drawStudentHeader(doc, student.rows[0]);
+
+    doc
+      .fontSize(14)
+      .font("Helvetica-Bold")
+      .fillColor("#000")
+      .text(`Historial de Atenciones (${attentions.rows.length})`);
+    doc.moveDown(1);
+
+    attentions.rows.forEach((att, index) => {
+      if (doc.y > 680) doc.addPage();
+
+      doc
+        .fontSize(11)
+        .font("Helvetica-Bold")
+        .fillColor("#000")
+        .text(
+          `${index + 1}. ${new Date(att.attention_date).toLocaleString("es-ES")}`,
+        );
+      doc.moveDown(0.3);
+
+      doc.fontSize(10).font("Helvetica").fillColor("#333");
+      doc.text(`Enfermero/a: ${att.nurse_name}`);
+      doc.text(`Motivo: ${att.reason}`);
+      doc.text(`Actuación: ${att.actuation}`);
+
+      if (att.actuation_description) {
+        doc.text(`Descripción: ${att.actuation_description}`);
+      }
+
+      doc.moveDown(0.5);
+      doc.moveTo(50, doc.y).lineTo(550, doc.y).stroke("#eee");
+      doc.moveDown(0.5);
+    });
+
+    doc.end();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Error generando el PDF" });
+  }
+};
