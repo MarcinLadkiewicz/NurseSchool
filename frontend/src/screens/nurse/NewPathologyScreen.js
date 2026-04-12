@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {View, TextInput, Text, ScrollView, ActivityIndicator, Alert, TouchableOpacity, StyleSheet} from 'react-native';
+import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
 import api from '../../api/axios';
@@ -9,7 +10,20 @@ const NewPathologyScreen = ({route, navigation}) => {
 
     const [pathologyName, setPathologyName] = useState('');
     const [pathologyDescription, setPathologyDescription] = useState('');
+    const [report, setReport] = useState(null);
     const [loading, setLoading] = useState(false);
+
+
+    const pickDocument = async () => {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: 'application/pdf'
+        });
+
+        if(!result.canceled) {
+            setReport(result.assets[0]);
+        }
+    }
+
 
     const handleSubmit = async () => {
         if(!pathologyName || !pathologyDescription){
@@ -17,10 +31,20 @@ const NewPathologyScreen = ({route, navigation}) => {
         }
         setLoading(true);
         try{
-            await api.post('/pathologies',{
-                student_id: studentId,
-                pathology_name: pathologyName,
-                pathology_description: pathologyDescription,
+            const formData = new FormData();
+            formData.append('student_id', studentId);
+            formData.append('pathology_name', pathologyName);
+            formData.append('pathology_description', pathologyDescription);
+
+            if(report) {
+                formData.append('report', {
+                    uri: report.uri,
+                    name: report.name,
+                    type: 'application/pdf',
+                })
+            }
+            await api.post('/pathologies',formData, {
+                headers: {'Content-Type': 'multipart/form-data'}
             });
             Alert.alert('Patología registrada', 'La patología se registró correctamente.');
             navigation.goBack();
@@ -32,55 +56,94 @@ const NewPathologyScreen = ({route, navigation}) => {
     }
     
     return (
-        <View style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.backBtn}
+              onPress={() => navigation.goBack()}
+            >
+              <Ionicons
+                name="chevron-back"
+                size={18}
+                color={colors.textPrimary}
+              />
+            </TouchableOpacity>
+            <Text style={styles.title}>Nueva patología</Text>
+          </View>
 
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-                        <Ionicons name='chevron-back' size={18} color={colors.textPrimary}/>
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Nueva patología</Text>
-                </View>
-                
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>NOMBRE</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Que patología...' 
-                            placeholderTextColor={colors.textMuted}
-                            value={pathologyName}
-                            onChangeText={setPathologyName}
-                        />
-                    </View>
-                </View>
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>NOMBRE</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Que patología..."
+                placeholderTextColor={colors.textMuted}
+                value={pathologyName}
+                onChangeText={setPathologyName}
+              />
+            </View>
+          </View>
 
-                <View style={styles.card}>
-                    <Text style={styles.sectionTitle}>DESCRIPCIÓN</Text>
-                    <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Descripción de la patología'
-                            placeholderTextColor={colors.textMuted}
-                            value={pathologyDescription}
-                            onChangeText={setPathologyDescription} 
-                            multiline
-                        />
-                    </View>
-                </View>
+          <View style={styles.card}>
+            <Text style={styles.sectionTitle}>DESCRIPCIÓN</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Descripción de la patología"
+                placeholderTextColor={colors.textMuted}
+                value={pathologyDescription}
+                onChangeText={setPathologyDescription}
+                multiline
+              />
+            </View>
+          </View>
 
-                <TouchableOpacity style={[styles.submitButton, (!pathologyName || !pathologyDescription) && styles.submitButtonDisabled]}
-                    onPress={handleSubmit}
-                    disabled={loading || !studentId || !pathologyName || !pathologyDescription }>
-                        {loading ? (
-                            <ActivityIndicator color='#fff'/>
-                        ) : (
-                        <Text style={styles.submitText}>Registrar patología</Text>
-                        )}
-                    </TouchableOpacity>
-            </ScrollView>
-        </View>
-    )
+          <TouchableOpacity style={styles.card} onPress={pickDocument}>
+            <View style={styles.uploadRow}>
+              <Ionicons
+                name="document-attach"
+                size={22}
+                color={colors.primary}
+              />
+              <Text style={styles.uploadText}>
+                {report ? report.name : "Adjuntar informe PDF (opcional)"}
+              </Text>
+              {report && (
+                <TouchableOpacity onPress={() => setReport(null)}>
+                  <Ionicons
+                    name="close-circle"
+                    size={20}
+                    color={colors.error}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.submitButton,
+              (!pathologyName || !pathologyDescription) &&
+                styles.submitButtonDisabled,
+            ]}
+            onPress={handleSubmit}
+            disabled={
+              loading || !studentId || !pathologyName || !pathologyDescription
+            }
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.submitText}>Registrar patología</Text>
+            )}
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
 
 
 }
@@ -142,6 +205,16 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 15,
     color: colors.textPrimary,
+  },
+  uploadRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  uploadText: {
+    flex: 1,
+    color: colors.textPrimary,
+    fontSize: 14,
   },
   submitButton: {
     backgroundColor: colors.primary,
