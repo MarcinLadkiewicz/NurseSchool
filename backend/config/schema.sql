@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS attentions (
     reason VARCHAR(255) NOT NULL,
     actuation TEXT NOT NULL,
     actuation_description TEXT,
-    added_file VARCHAR(250),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
