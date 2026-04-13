@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import {View, Text, ScrollView, StyleSheet, ActivityIndicator, TouchableOpacity, ToastAndroid} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
-import formatTime from '../../utils/formatTime';
+import formatDateTime from '../../utils/formatDateTime';
 import getInitials from '../../utils/getInitials';
 import getSeverityStyle from '../../utils/getSeverityStyle';
 import api from '../../api/axios';
@@ -209,7 +209,7 @@ const ChildDetailScreen = ({route, navigation}) => {
                       </Text>
                       <Text style={styles.attentionMeta}>
                         {attention.actuation} ·{" "}
-                        {formatTime(attention.attention_date)}
+                        {formatDateTime(attention.attention_date)}
                       </Text>
                     </View>
                   {index < Math.min(attentions.length, 5) - 1 && (

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../theme/colors';
-import formatTime from '../utils/formatTime';
+import formatDateTime from '../utils/formatDateTime';
 
 const AttentionItem = (props) => {
   const item = props.item;
@@ -35,7 +35,7 @@ return (
     {/* Hora + icono estado */}
     <View style={styles.attentionRight}>
       <Text style={styles.attentionTime}>
-        {formatTime(item.attention_date)}
+        {formatDateTime(item.attention_date)}
       </Text>
       <View
         style={[
