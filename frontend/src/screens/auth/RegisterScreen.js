@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { darkTheme as colors } from "../../theme/colors";
+import { FIELD_LIMITS } from '../../utils/fieldLimits';
 import api from "../../api/axios";
 
 const RegisterScreen = ({ navigation }) => {
@@ -47,7 +48,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/*Title*/}
+      
       <View style={styles.logoContainer}>
             <View style={styles.logoSquare}>
               <Text style={styles.logo}>🏥</Text>
@@ -56,7 +57,7 @@ const RegisterScreen = ({ navigation }) => {
 
       <Text style={styles.title}>Crear Cuenta</Text>
 
-      {/* Name Input*/}
+      
 
       <Text style={styles.label}>Nombre</Text>
       <View style={styles.inputContainer}>
@@ -72,10 +73,10 @@ const RegisterScreen = ({ navigation }) => {
           placeholderTextColor={colors.textMuted}
           value={name}
           onChangeText={setName}
+          maxLength={FIELD_LIMITS.userName}
         />
       </View>
 
-      {/*Email Input*/}
 
       <Text style={styles.label}>Email</Text>
       <View style={styles.inputContainer}>
@@ -91,12 +92,12 @@ const RegisterScreen = ({ navigation }) => {
           placeholderTextColor={colors.textMuted}
           value={email}
           onChangeText={setEmail}
+          maxLength={FIELD_LIMITS.userEmail}
           keyboardType="email-address"
           autoCapitalize="none"
         />
       </View>
 
-      {/* Password Input */}
 
       <Text style={styles.label}>Password</Text>
       <View style={styles.inputContainer}>
@@ -122,7 +123,7 @@ const RegisterScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      {/* Secure Code Register*/}
+
       {rol !== 'padre' && (
         <>
           <Text style={styles.label}>Código de Invitación</Text>
@@ -145,7 +146,6 @@ const RegisterScreen = ({ navigation }) => {
         </>
       )}
 
-      {/*Rol Selector*/}
 
       <Text style={styles.label}>Rol:</Text>
       <View style={styles.roles}>
@@ -162,7 +162,6 @@ const RegisterScreen = ({ navigation }) => {
         ))}
       </View>
 
-      {/*Register Button*/}
 
       <TouchableOpacity
         style={styles.boton}
@@ -183,7 +182,6 @@ const RegisterScreen = ({ navigation }) => {
         </LinearGradient>
       </TouchableOpacity>
 
-      {/*Already Have Account*/}
 
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text style={styles.link}>¿Ya tienes cuenta? Inicia Sesión</Text>
