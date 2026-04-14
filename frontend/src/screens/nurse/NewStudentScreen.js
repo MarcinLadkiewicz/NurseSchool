@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Alert, ActivityIndicator,ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
+import { FIELD_LIMITS } from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 
@@ -60,7 +61,8 @@ const NewStudentScreen = ({navigation}) => {
             placeholder='Nombre del alumno'
             placeholderTextColor={colors.textMuted}
             value={name}
-            onChangeText={setName}          
+            onChangeText={setName}  
+            maxLength={FIELD_LIMITS.studentName}        
           />
         </View>
       </View>
@@ -73,6 +75,7 @@ const NewStudentScreen = ({navigation}) => {
             placeholderTextColor={colors.textMuted}
             value={surname}
             onChangeText={setSurname}
+            maxLength={FIELD_LIMITS.studentSurname}
           />
         </View>
       </View>
@@ -87,6 +90,7 @@ const NewStudentScreen = ({navigation}) => {
             value={course}
             onChangeText={setCourse}
             autoCapitalize='characters'
+            maxLength={FIELD_LIMITS.studentCourse}
           />
         </View>
       </View>
