@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator, ScrollView, Alert,  TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { darkTheme as colors} from '../../theme/colors';
+import {FIELD_LIMITS} from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 
@@ -86,7 +87,6 @@ const NewAttentionScreen = ({route, navigation}) => {
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
  
-        {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="chevron-back" size={22} color={colors.primary} />
@@ -94,7 +94,6 @@ const NewAttentionScreen = ({route, navigation}) => {
           <Text style={styles.headerTitle}>Nueva atención</Text>
         </View>
  
-        {/* Selector de alumno (solo si no viene por params) */}
         {!studentIdFromParams && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>ALUMNO</Text>
@@ -143,7 +142,6 @@ const NewAttentionScreen = ({route, navigation}) => {
           </View>
         )}
  
-        {/* Warning alergias */}
         {allergies.length > 0 && (
           <View style={styles.warningCard}>
             <View style={styles.warningHeader}>
@@ -175,7 +173,6 @@ const NewAttentionScreen = ({route, navigation}) => {
           </View>
         )}
  
-        {/* Formulario */}
         <View style={styles.card}>
           <Text style={styles.sectionTitle}>MOTIVO *</Text>
           <View style={styles.inputContainer}>
@@ -185,6 +182,7 @@ const NewAttentionScreen = ({route, navigation}) => {
               placeholderTextColor={colors.textMuted}
               value={reason}
               onChangeText={setReason}
+              maxLength={FIELD_LIMITS.attentionReason}
             />
           </View>
  
@@ -196,6 +194,7 @@ const NewAttentionScreen = ({route, navigation}) => {
               placeholderTextColor={colors.textMuted}
               value={actuation}
               onChangeText={setActuation}
+              maxLength={FIELD_LIMITS.attentionActuation}
               multiline
             />
           </View>
@@ -208,12 +207,12 @@ const NewAttentionScreen = ({route, navigation}) => {
               placeholderTextColor={colors.textMuted}
               value={actuationDescription}
               onChangeText={setActuationDescription}
+              maxLength={FIELD_LIMITS.attentionDescription}
               multiline
             />
           </View>
         </View>
  
-        {/* Botón guardar */}
         <TouchableOpacity
           style={[styles.submitButton, (!studentId || !reason || !actuation) && styles.submitButtonDisabled]}
           onPress={handleSubmit}
