@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {View, Text, TextInput, ScrollView, TouchableOpacity, Alert, ActivityIndicator, StyleSheet, ToastAndroid} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
+import {FIELD_LIMITS} from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 const EditStudentScreen = ({route, navigation}) => {
@@ -74,6 +75,7 @@ const EditStudentScreen = ({route, navigation}) => {
                         placeholderTextColor={colors.textMuted}
                         value={name}
                         onChangeText={setName}
+                        maxLength={FIELD_LIMITS.studentName}
                     />
                 </View>
             </View>
@@ -86,6 +88,7 @@ const EditStudentScreen = ({route, navigation}) => {
                     placeholderTextColor={colors.textMuted}
                     value={surname}
                     onChangeText={setSurname}
+                    maxLength={FIELD_LIMITS.studentSurname}
                     />
                 </View>
             </View>
@@ -98,6 +101,7 @@ const EditStudentScreen = ({route, navigation}) => {
                     placeholderTextColor={colors.textMuted}
                     value={course}
                     onChangeText={setCourse}
+                    maxLength={FIELD_LIMITS.studentCourse}
                     />
                 </View>
             </View>
