@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ActivityIndicator, ScrollView, TouchableOpacity, Alert,  StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
+import {FIELD_LIMITS} from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 
@@ -70,7 +71,7 @@ const NewAllergyScreen = ({route, navigation}) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
       >
-        {/* Header */}
+        
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.backButton}
@@ -81,7 +82,7 @@ const NewAllergyScreen = ({route, navigation}) => {
           <Text style={styles.headerTitle}>Nueva alergia</Text>
         </View>
 
-        {/* Selector de alumno (solo si no viene por params) */}
+        
         {!studentIdFromParams && (
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>ALUMNO</Text>
@@ -143,9 +144,8 @@ const NewAllergyScreen = ({route, navigation}) => {
           </View>
         )}
 
-        {/* Formulario alergia */}
         <View style={styles.card}>
-          {/* Tipo de alergia */}
+          
           <Text style={styles.sectionTitle}>TIPO DE ALERGIA</Text>
           <View style={styles.selectorRow}>
             {["alimentaria", "medicamentosa"].map((type) => (
@@ -180,7 +180,6 @@ const NewAllergyScreen = ({route, navigation}) => {
             ))}
           </View>
 
-          {/* Severidad */}
           <Text style={[styles.sectionTitle, { marginTop: 20 }]}>
             SEVERIDAD
           </Text>
@@ -215,7 +214,6 @@ const NewAllergyScreen = ({route, navigation}) => {
             ))}
           </View>
 
-          {/* Descripción */}
           <Text style={[styles.sectionTitle, { marginTop: 20 }]}>
             DESCRIPCIÓN
           </Text>
@@ -229,12 +227,12 @@ const NewAllergyScreen = ({route, navigation}) => {
               placeholderTextColor={colors.textMuted}
               value={allergyDescription}
               onChangeText={setAllergyDescription}
+              maxLength={FIELD_LIMITS.allergyDescription}
               multiline
             />
           </View>
         </View>
 
-        {/* Botón guardar */}
         <TouchableOpacity
           style={[
             styles.submitButton,
@@ -266,7 +264,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
 
-  // Header
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -289,7 +286,6 @@ const styles = StyleSheet.create({
     marginLeft: 14,
   },
 
-  // Card
   card: {
     backgroundColor: colors.surface,
     borderRadius: 16,
@@ -306,7 +302,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // Input
+
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -323,7 +319,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
   },
 
-  // Selector alumno
   selectedStudent: {
     flexDirection: "row",
     alignItems: "center",
@@ -370,7 +365,6 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
 
-  // Selector tipo
   selectorRow: {
     flexDirection: "row",
     gap: 10,
@@ -400,7 +394,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Selector severidad
   severityBtn: {
     flex: 1,
     alignItems: "center",
@@ -415,7 +408,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Submit
   submitButton: {
     backgroundColor: colors.primary,
     borderRadius: 14,
