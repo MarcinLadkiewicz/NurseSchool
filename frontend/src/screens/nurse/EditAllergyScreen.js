@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, ScrollView, Alert, ActivityIndicator, StyleSheet} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
+import { FIELD_LIMITS } from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 
@@ -146,6 +147,7 @@ const EditAllergy = ({route, navigation}) => {
                               placeholderTextColor={colors.textMuted}
                               value={allergyDescription}
                               onChangeText={setAllergyDescription}
+                              maxLength={FIELD_LIMITS.allergyDescription}
                               multiline
                             />
                           </View>
