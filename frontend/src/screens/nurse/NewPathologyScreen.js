@@ -3,6 +3,7 @@ import {View, TextInput, Text, ScrollView, ActivityIndicator, Alert, TouchableOp
 import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
 import {darkTheme as colors} from '../../theme/colors';
+import { FIELD_LIMITS } from '../../utils/fieldLimits';
 import api from '../../api/axios';
 
 const NewPathologyScreen = ({route, navigation}) => {
@@ -84,6 +85,7 @@ const NewPathologyScreen = ({route, navigation}) => {
                 placeholderTextColor={colors.textMuted}
                 value={pathologyName}
                 onChangeText={setPathologyName}
+                maxLength={FIELD_LIMITS.pathologyName}
               />
             </View>
           </View>
@@ -97,6 +99,7 @@ const NewPathologyScreen = ({route, navigation}) => {
                 placeholderTextColor={colors.textMuted}
                 value={pathologyDescription}
                 onChangeText={setPathologyDescription}
+                maxLength={FIELD_LIMITS.pathologyDescription}
                 multiline
               />
             </View>
