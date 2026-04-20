@@ -28,7 +28,7 @@ NurseSchool es una aplicación móvil multiplataforma destinada a la gestión sa
 - Registro de atenciones médicas con descripción de actuación
 - Gestión de alergias (alimentarias y medicamentosas) con nivel de severidad
 - Gestión de patologías con posibilidad de adjuntar informes PDF
-- Notificaciones push a los padres mediante Firebase Cloud Messaging (FCM)
+- Notificaciones push a los padres mediante **expo-notifications**
 - Panel de estadísticas para la dirección
 - Exportación del historial completo
 
@@ -48,7 +48,7 @@ NurseSchool es una aplicación móvil multiplataforma destinada a la gestión sa
 - **Bcrypt** para el cifrado de contraseñas
 - **Multer** para la subida de ficheros
 - **PDFKit** para la generación de informes PDF
-- **Firebase Admin SDK** para el envío de notificaciones push
+- **Expo Server SDK** para el envío de notificaciones push mediante expo-notifications
 
 #### Infraestructura
 - **Docker Compose** para levantar la base de datos PostgreSQL y Adminer
@@ -124,7 +124,7 @@ Escanea el código QR con la app Expo Go o ejecuta en emulador/simulador.
 | `DB_PASSWORD` | Contraseña de la BD |
 | `DB_NAME` | Nombre de la BD |
 | `JWT_SECRET` | Clave secreta para firmar los tokens JWT |
-| `FIREBASE_*` | Credenciales de Firebase para notificaciones push |
+| `EXPO_ACCESS_TOKEN` | Token de acceso para el servicio de notificaciones de Expo (opcional) |
 
 ### API REST — Endpoints principales
 
@@ -169,7 +169,7 @@ NurseSchool is a cross-platform mobile application designed for healthcare manag
 - Medical attention records with actuation description
 - Allergy management (food and drug) with severity levels
 - Pathology management with optional PDF report attachments
-- Push notifications to parents via Firebase Cloud Messaging (FCM)
+- Push notifications to parents via **expo-notifications**
 - Statistics dashboard for management
 - Full history export
 
@@ -189,7 +189,7 @@ NurseSchool is a cross-platform mobile application designed for healthcare manag
 - **Bcrypt** for password hashing
 - **Multer** for file uploads
 - **PDFKit** for PDF report generation
-- **Firebase Admin SDK** for push notifications
+- **Expo Server SDK** for sending push notifications via expo-notifications
 
 #### Infrastructure
 - **Docker Compose** to run the PostgreSQL database and Adminer
@@ -265,7 +265,7 @@ Scan the QR code with the Expo Go app or run on an emulator/simulator.
 | `DB_PASSWORD` | Database password |
 | `DB_NAME` | Database name |
 | `JWT_SECRET` | Secret key for signing JWT tokens |
-| `FIREBASE_*` | Firebase credentials for push notifications |
+| `EXPO_ACCESS_TOKEN` | Expo access token for push notifications (optional) |
 
 ### REST API — Main Endpoints
 
