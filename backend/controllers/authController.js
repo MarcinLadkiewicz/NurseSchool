@@ -95,3 +95,16 @@ exports.login = async (req, res) =>{
         res.status(500).json({error: 'Error del servidor'})
     }
 };
+
+exports.updatePushToken = async(req, res) => {
+    try {
+        const {pushToken} = req.body;
+        await pool.query(
+            'UPDATE users SET token_fcm = $1 WHERE id = $2',
+            [pushToken, req.user.id]
+        );
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error: 'Error del servidor'});
+    }
+}

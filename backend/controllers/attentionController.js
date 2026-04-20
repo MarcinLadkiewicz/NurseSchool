@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 const PDFDocument = require('pdfkit');
+const sendPushNotification = require('../utils/sendPushNotification');
 
 exports.getAllAttentions = async (req, res) => {
   try {
@@ -136,8 +137,23 @@ exports.createAttention = async (req, res) => {
             'INSERT INTO attentions (student_id, enfermero_id, reason, actuation, actuation_description) VALUES ($1, $2, $3, $4, $5) RETURNING*',
             [student_id, enfermero_id, reason, actuation, actuation_description]
         );
-        //Aquí irá la notificación push al padre.
-
+        try {
+          const padre = await pool.query(
+            'SELECT u.token_fcm FROM users u JOIN students s ON s.padre_id = u.id WHERE s.id = $1',
+            [student_id]
+          );
+  
+          if(padre.rows[0]?.token_fcm){
+            const studentData = student.rows[0];
+            await sendPushNotification(
+              padre.rows[0].token_fcm,
+              'Nueva atención registrada',
+              `${studentData.name} ${studentData.surname} ha sido atendido. Motivo: ${reason}`
+            );
+          }
+        } catch (pushErr) {
+          console.error('Error enviando notificación push: ', pushErr);
+        }
         return res.status(201).json({
             message: 'Atención registrada',
             attention: result.rows[0]

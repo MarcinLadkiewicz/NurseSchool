@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "expo-device": "^55.0.15",
+    "expo-notifications": "^55.0.19",
     "pdfkit": "^0.18.0"
   }
 }

@@ -8,5 +8,6 @@ router.post('/register',validateLength([
     {name: 'email', max: LIMITS.userEmail, label: 'Correo Electrónico'},
 ]), ctrl.register);
 router.post('/login', ctrl.login);
+router.put('/push-token', ctrl.updatePushToken);
 
 module.exports = router;

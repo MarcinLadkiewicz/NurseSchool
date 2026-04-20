@@ -113,7 +113,7 @@ const AttentionDetailScreen = ({route, navigation}) => {
             )}
           </View>
 
-          <TouchableOpacity style={styles.pdfButton} onPress={() => downloadPdf(`/attentions/pdf/attention/${id}`, `atencion_id${id}.pdf`)}>
+          <TouchableOpacity style={styles.pdfButton} onPress={() => downloadPdf(`/api/attentions/pdf/attention/${id}`, `atencion_id${id}.pdf`)}>
             <Ionicons
               name="download-outline"
               size={18}

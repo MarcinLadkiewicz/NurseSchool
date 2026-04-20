@@ -7,8 +7,9 @@ const validateLength = (fields) => {
                     error: `${label || name} no puede superar los ${max} caracteres`
                 })
             }
-            next();
+            
         }
+        next();
     }
 }
 module.exports = validateLength;
