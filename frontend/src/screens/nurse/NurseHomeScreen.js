@@ -22,7 +22,7 @@
    const [refreshing, setRefreshing] = useState(false);
 
    const { user } = useContext(AuthContext);
-
+  
    const loadDashboard = async () => {
      try {
        const res = await api.get("/dashboard/nurseDashboard");
