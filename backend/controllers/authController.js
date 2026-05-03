@@ -3,9 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-//--------------
-//REGISTRAR NUEVO USUARIO
-//--------------
 
 exports.register = async (req, res) => {
     const CODES = {
@@ -47,9 +44,6 @@ exports.register = async (req, res) => {
     }
 };
 
-//---------------
-//LOGIN: AUTENTICAR USUARIO EXISTENTE
-//---------------
 
 exports.login = async (req, res) =>{
     try {

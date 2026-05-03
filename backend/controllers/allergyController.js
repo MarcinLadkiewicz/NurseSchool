@@ -1,8 +1,5 @@
 const pool = require("../config/db");
 
-//-------------------
-// LIST ALL ALLERGYS
-//-------------------
 
 exports.getAllAllergies = async (req, res) => {
   try {
@@ -38,9 +35,7 @@ exports.getAllAllergies = async (req, res) => {
   }
 };
 
-//------------------
-//LIST ALLERGYS BY STUDENT ID
-//------------------
+
 
 exports.getAllergyByStudentId = async (req, res) => {
   try {
@@ -70,9 +65,7 @@ exports.getAllergyByStudentId = async (req, res) => {
   }
 };
 
-//------------------
-//REGISTER ALLERGY
-//------------------
+
 
 exports.registerAllergy = async (req, res) => {
   try {
@@ -106,9 +99,7 @@ exports.registerAllergy = async (req, res) => {
   }
 };
 
-//------------------
-//UPDATE ALLERGY
-//------------------
+
 
 exports.updateAllergy = async (req, res) => {
   try {
@@ -141,9 +132,6 @@ exports.updateAllergy = async (req, res) => {
   }
 };
 
-//------------------
-//DELETE ALLERGY
-//------------------
 
 exports.deleteAllergy = async (req, res) => {
   try {
@@ -186,4 +174,3 @@ exports.getAllergiesByMyChildren = async (req, res) => {
 };
 
 
-//--- FALTA MANEJO DE ARCHIVOS CON MULTER, SE HARÁ DESPUES

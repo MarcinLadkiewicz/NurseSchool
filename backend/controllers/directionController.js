@@ -36,9 +36,6 @@ exports.getAllAttentions = async (req, res) => {
   }
 };
 
-//-----------------------
-//ALL ALLERGYS
-//-----------------------
 
 exports.getAllAllergies = async (req, res) => {
   try {
@@ -75,9 +72,6 @@ exports.getAllAllergies = async (req, res) => {
   }
 };
 
-//-----------------------
-//SUMMARY
-//-----------------------
 
 exports.summary = async (req, res) => {
   try {

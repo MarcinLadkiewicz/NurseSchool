@@ -1,11 +1,5 @@
 const pool = require ('../config/db');
 
-//-------------
-//LIST ALL STUDENTS
-//-------------
-
-
-
 exports.getAll = async (req, res) => {
 
     try{
@@ -41,9 +35,7 @@ exports.getAll = async (req, res) => {
     }
 }
 
-//--------------------
-// STUDENT FULL INFO
-//--------------------
+
 
 exports.getById = async (req, res) => {
     try{
@@ -85,10 +77,6 @@ exports.getById = async (req, res) => {
     }
 }
 
-//---------------------
-// CREATE STUDENT
-//---------------------
-
 exports.create = async (req, res) => {
     try{
         const {name, surname, course, birthdate, padre_id} = req.body;
@@ -119,9 +107,6 @@ exports.create = async (req, res) => {
     }
 }
 
-//----------------
-// UPDATE STUDENT
-//----------------
 
 exports.update = async (req, res) => {
     try{
@@ -155,9 +140,6 @@ exports.update = async (req, res) => {
     }
 }
 
-//--------------
-//STUDENTBYFATHERID
-//--------------
 
 exports.getByFatherId = async (req,res) => {
 
